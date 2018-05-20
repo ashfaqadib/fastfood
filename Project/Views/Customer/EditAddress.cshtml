@@ -1,0 +1,103 @@
+﻿@{
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+    var value1 = "selected";
+}
+<head>
+    <link href="~/content/bootstrap.min.css" rel="stylesheet">
+</head>
+<br/> <br/>
+<fieldset style="width:50%;height:350px">
+    <legend><b>Edit Account</b></legend>
+	<form method="post">
+		<br/>
+		<table width="100%" height="250px" cellpadding="0" cellspacing="0" style="background-color:rgba(0,0,0,0.5);text-align:center;border-style:inset">
+            <tr>
+                <td colspan="4">@Html.ValidationSummary()</td>
+            </tr>
+			<tr>
+				<td><font size="3" color="white">District</td>
+				<td>:</td>
+				<td>
+                    <select name="district" onchange = "myFunction(this)">
+                        <option></option>
+                        <option @if (@Model.District == "Dhaka") { @value1 }>Dhaka</option>
+                        <option @if (@Model.District == "Chittagong") { @value1 }>Chittagong</option>
+                        <option @if (@Model.District == "Rajshahi") { @value1 }>Rajshahi</option>
+                        <option @if (@Model.District == "Barishal") { @value1 }>Barishal</option>
+                        <option @if (@Model.District == "Sylhet") { @value1 }>Sylhet</option>
+                        <option @if (@Model.District == "Comilla") { @value1 }>Comilla</option>
+                        <option @if (@Model.District == "Khulna") { @value1 }>Khulna</option>
+                    </select>
+				</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td valign="top"><font size="3" color="white">Area</td>
+				<td valign="top">:</td>
+				<td>
+                    @Html.TextBox("area")
+				</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td valign="top"><font size="3" color="white">Road#</td>
+				<td valign="top">:</td>
+				<td>
+                    @Html.TextBox("road")
+				</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><font size="3" color="white">House#</td>
+				<td>:</td>
+				<td>
+                    @Html.TextBox("house")
+				</td>
+				<td></td>
+			</tr>	
+			<tr>
+				<td><font size="3" color="white">Flat#</td>
+				<td>:</td>
+				<td>@Html.TextBox("flat")</td>
+                
+				<td></td>
+			</tr>	
+			<tr>
+				<td><font size="3" color="white">Contact#</td>
+				<td>:</td>
+				<td>@Html.TextBox("contact")</td>
+				<td></td>
+			</tr>	
+		</table>
+		<hr/>
+        <br/ style="padding-top:5%">
+		<input type="submit" value="Submit" style="width:100px;color:orangered">
+		<input type="reset" style="width:100px;color:orangered">
+	</form>
+    <br/>
+</fieldset>
+
+
+<script>
+    function myFunction(district) {
+
+        var areaSelect = document.getElementById("area");
+        areaSelect.innerHTML = "<option></option>";
+        var dhakaAreas = ['Mirpur',1, 'Shyamoli',2, 'Mohammadpur',2];
+        var chittagongAreas = ['CDA',12, 'Khulshi',13, 'Agrabad',12];
+        var sylhetAreas = ['Baluchor',26, 'Baghbari R/A',26, 'Kumar Para',30];
+
+        if (district.value == "Dhaka") var currentArea = dhakaAreas;
+        else if (district.value == "Chittagong") var currentArea = chittagongAreas;
+        else if (district.value == "Sylhet") var currentArea = sylhetAreas;
+
+        for(var i=0;i<currentArea.length;i++) {
+            areaSelect.innerHTML += '<option value="' + currentArea[i + 1] + '">' + currentArea[i] + "</option>";
+            i++;
+        }
+    }
+    function search() {
+        var region = document.getElementById("areaSelect").value;
+        location = "/Customer/Start?region=" + region;
+    }
+</script>

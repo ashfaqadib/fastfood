@@ -1,0 +1,14 @@
+K:\Academic\Semester 9\ATP 2\Project\Project\Project.Core\bin\Debug\Project.Core.dll.config
+K:\Academic\Semester 9\ATP 2\Project\Project\Project.Core\bin\Debug\Project.Core.dll
+K:\Academic\Semester 9\ATP 2\Project\Project\Project.Core\bin\Debug\Project.Core.pdb
+K:\Academic\Semester 9\ATP 2\Project\Project\Project.Core\bin\Debug\EntityFramework.dll
+K:\Academic\Semester 9\ATP 2\Project\Project\Project.Core\bin\Debug\EntityFramework.SqlServer.dll
+K:\Academic\Semester 9\ATP 2\Project\Project\Project.Core\bin\Debug\Project.Data.dll
+K:\Academic\Semester 9\ATP 2\Project\Project\Project.Core\bin\Debug\Project.Entity.dll
+K:\Academic\Semester 9\ATP 2\Project\Project\Project.Core\bin\Debug\Project.Data.pdb
+K:\Academic\Semester 9\ATP 2\Project\Project\Project.Core\bin\Debug\Project.Entity.pdb
+K:\Academic\Semester 9\ATP 2\Project\Project\Project.Core\bin\Debug\EntityFramework.xml
+K:\Academic\Semester 9\ATP 2\Project\Project\Project.Core\bin\Debug\EntityFramework.SqlServer.xml
+K:\Academic\Semester 9\ATP 2\Project\Project\Project.Core\obj\Debug\Project.Core.csprojResolveAssemblyReference.cache
+K:\Academic\Semester 9\ATP 2\Project\Project\Project.Core\obj\Debug\Project.Core.dll
+K:\Academic\Semester 9\ATP 2\Project\Project\Project.Core\obj\Debug\Project.Core.pdb

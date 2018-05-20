@@ -1,0 +1,361 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_TransporterLayout.cshtml";
+}
+<head>
+    <link href="~/content/bootstrap.min.css" rel="stylesheet">
+</head>
+<br/> <br/>
+<body style="background-color:orange">
+    </body>
+<link rel="stylesheet" type="text/css" href="../../CSS/ModalStyle.css">
+
+<div id="confirmModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="close">&times;</span>
+      <h2>Deliver Order</h2>
+    </div>
+    <div class="modal-body">
+      <p>Are you sure you want to deliver this order?</p>
+    </div>
+    <div class="modal-footer">
+    </div>
+  </div>
+
+</div>
+
+
+<fieldset>
+    <legend><b>Tasks</b></legend>
+    <br />
+
+<table width="100%">
+    <tr>
+        <td id="taskTable" align="center">
+        </td>
+    </tr>
+</table>
+    
+</fieldset>
+
+<br/>
+
+
+<fieldset>
+    <legend><b>ORDERS</b></legend>
+    <br />
+
+    Get Orders Within Radius: 
+    <select id="radius" onchange="radiusChange()">
+        <option></option>
+        <option value="5">5 km</option>
+        <option value="10">10 km</option>
+        <option value="15">15 km</option>
+    </select>
+
+    <table id="homeTable" border="0" width="60%" style="border-collapse: collapse;">
+
+    </table>
+</fieldset>
+    
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+    <script>
+
+        var modal = document.getElementById('confirmModal');
+        getNearbyOrders(5);
+        GetTasks();
+
+        function closeModal() {
+            $(".modal-footer").html("");
+            modal.style.display = "none";
+        }
+
+        function askConfirmation(invId) {
+            $(".modal-footer").html('<h3><button onclick="deliverOrder(' + invId + ')">Yes</button> <button onclick="closeModal()">No</button></h3>');
+            modal.style.display = "block";
+        }
+
+        function getNearbyOrders(radius) {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    $.ajax({
+                        type: "GET",
+                        url: "/Transporter/HomeSuggestions?Latitude=" + pos.lat + '&Longitude=' + pos.lng + '&Radius=' + radius,
+                        dataType: "json",
+                        success: function (res) {
+                            if (res != "") prepareTable(res);
+                            else $("#homeTable").html("<tr><td align='center'>There are no received orders nearby.</td></tr>");
+                        },
+                        error: function (xhr) {
+                            alert(xhr.error);
+                        }
+                    });
+                })
+            }
+            else {
+                // Browser doesn't support Geolocation
+                handleLocationError(false, infoWindow, map.getCenter());
+            }
+        }
+
+        function GetTasks() {
+            $.ajax({
+                type: "GET",
+                url: '/Transporter/GetTasks',
+                dataType: "json",
+                success: function (tasks) {
+                    if (tasks != "") PrepareTaskTable(tasks);
+                    else $("#taskTable").html("No task assigned.");
+                },
+                error: function (xhr) {
+                    alert(xhr.error);
+                }
+            });
+        }
+
+        function CancelTask(invId) {
+            $.ajax({
+                type: "GET",
+                url: '/Transporter/CancelTask?invId=' + invId,
+                dataType: "json",
+                success: function () {
+                    GetTasks();
+                    radiusChange();
+                },
+                error: function (xhr) {
+                    alert(xhr.error);
+                }
+            });
+        }
+
+        function ConfirmDelivery(invId) {
+            if ($("#token-" + invId).val() != "") {
+                $.ajax({
+                    type: "GET",
+                    url: '/Transporter/ConfirmDelivery?invId=' + invId + '&token=' + $("#token-" + invId).val(),
+                    dataType: "json",
+                    success: function (tasks) {
+                        if (tasks == true) {
+                            GetTasks();
+                            alert("Order delivery successful. Thank you for delivering.");
+                        }
+                        else {
+                            $("#tokenError-" + invId).html("*Token mismatch.");
+                        }
+                    },
+                    error: function (xhr) {
+                        alert(xhr.error);
+                    }
+                });
+            }
+            else {
+                $("#tokenError-" + invId).html("*Please enter the invoice token provided by recipient.");
+            }
+        }
+        
+
+        function deliverOrder(invId) {
+            closeModal();
+            $.ajax({
+                type: "GET",
+                url: '/Transporter/DeliverOrder?invId=' + invId,
+                success: function () {
+                    radiusChange();
+                    GetTasks();
+                },
+                error: function (xhr) {
+                    alert(xhr.error);
+                }
+            });
+        }
+
+        function showInvoiceDetails(invId) {
+            $.ajax({
+                type: "GET",
+                url: '/Transporter/GetInvoiceDetails?invId=' + invId,
+                dataType: "json",
+                success: function (invoice) {
+                    prepareInvoiceDetailsTable(invoice);
+                    $("#invDetailRow-" + invoice.InvoiceNo).fadeToggle();
+                    //console.log(invoice);
+                },
+                error: function (xhr) {
+                    alert(xhr.error);
+                }
+            });
+        }
+
+        function PrepareTaskTable(tasks) {
+            document.getElementById("taskTable").innerHTML = '';
+            for (var task in tasks) {
+                document.getElementById("taskTable").innerHTML += '<table  border="1" width="40%" cellspacing="1" cellpadding="10px" style="border-collapse: collapse;float:left;margin-left: 10px;background-color:rgba(0,0,0,0.5);border-style:inset;color:white">' +
+                    '<tr><th colspan="2">Task '+(task)+'</th></tr>'+
+                    '<tr>' + '<th>Restaurant Name:</th>' + '<td>' + tasks[task].RestaurantName + '</td></tr>' +
+                    '<tr>' + '<th>Customer Name</th>' + '<td>' + tasks[task].CustomerName + '</td></tr>' +
+                    '<tr>' + '<th>Customer Contact#</th>' + '<td>' + tasks[task].CustomerContactNo + '</td></tr>' +
+                    '<tr>' + '<th>Invoice#</th>' + '<td>' + tasks[task].InvoiceNo + '</td></tr>' +
+                    '<tr>' + '<th>Delivery Address:</th>' + '<td>' + tasks[task].DeliveryAddress + '</td></tr>' +
+                    '<tr>' + '<th colspan="2">Token# <br/> <input id="token-' + tasks[task].InvoiceNo + '" style="color:black"> <button onclick="ConfirmDelivery(' + tasks[task].InvoiceNo + ')" style="background-color:green;color:white">Confirm Delivery</button> <div id="tokenError-' + tasks[task].InvoiceNo + '"> </div></th>' +
+                    '<tr>' + '<th colspan="2"><button onclick="CancelTask(' + tasks[task].InvoiceNo + ')" style="background-color:red;color:white"> Cancel Task </button></th></tr>' +
+                    '</table>';
+            }
+        }
+
+        function prepareTable(invoices) {
+            var htmlobj;
+            htmlobj = '<tr>' +
+                    '<th>'+
+                       'Invoice#'+
+                    '</th>'+
+                    '<th>'+
+                        'Ordered By'+
+                    '</th>' +
+                    '<th>' +
+                        'Ordered From' +
+                    '</th>' +
+                    '<th>'+
+                        'Order Placed'+
+                    '</th>'+
+                    '<th>'+
+                       ' Bill'+
+                    '</th>'+
+                   ' <th>'+
+                       ' Status'+
+                    '</th>'+
+                    '<th>'+
+                      'Action'+
+                   '</th>'+
+                   '<th>'+
+                      'Action'+
+                    '</th>'+
+                '</tr>';
+            for(var inv in invoices)
+            {
+                htmlobj +=
+                '<tr style="background-color:rgba(0,0,0,0.5);color:white;border-style:inset">' +
+                '<td>'+
+                    invoices[inv].InvoiceNo +
+                '</td>'+
+                '<td>'+
+                    invoices[inv].OrderOwner+
+                ' </td>' +
+                '<td>' +
+                    invoices[inv].RestaurantName +
+                ' </td>' +
+                '<td>'+
+                    invoices[inv].OrderTime+
+                ' </td>'+
+                ' <td>'+
+                    invoices[inv].Bill+
+                ' </td>'+
+                '<td>'+
+                    invoices[inv].Status+
+                ' </td>'+
+                '<td>'+
+                    ' <button onclick="showInvoiceDetails(' + invoices[inv].InvoiceNo + ')" style="background-color:orange;color:black"> <b>Details</b> </button>' +
+                ' </td>'+
+                '<td>'+
+                ' <button onclick="askConfirmation(' + invoices[inv].InvoiceNo + ')" style="background-color:green;color:white"> <b>Deliver Order</b> </button>' +
+            ' </td>' +
+            '</tr>'+
+            '<tr id="invDetailRow-' + invoices[inv].InvoiceNo + '" style="background-color:#F9B384;display:none"></tr>';
+            }
+
+            document.getElementById("homeTable").innerHTML = htmlobj;
+        }
+
+        function radiusChange() {
+            if ($("#radius").val() != "") getNearbyOrders($("#radius").val());
+            else getNearbyOrders(5);
+        }
+
+
+
+        function prepareInvoiceDetailsTable(invoice) {
+            var htmlstring = '<td colspan="8"><table border="1" width="100%" cellpadding="10px" style="background-color:rgba(255,165,0,0.5)">' +
+                '<tr>'+
+                    '<td align="center" colspan="5"><b>Invoice#' + invoice.InvoiceNo + '</b></td>' +
+                '</tr>'+
+                '<tr>'+
+                   ' <td align="center" colspan="5"><b>' + invoice.RestaurantName + '</b></td>' +
+                '</tr>'+
+                '<tr>'+
+                    '<td align="center" colspan="5"><small>' + invoice.RestaurantAddress + '</small></td>' +
+                '</tr>'+
+                '<tr>'+
+                   ' <th colspan="2">Recipient</th>' +
+                    '<td align="center" colspan="3">' + invoice.Recipient + '</td>' +
+               ' </tr>'+
+                '<tr>'+
+                    '<th colspan="2">Recipient Contact#</th>'+
+                    '<td align="center" colspan="3">' + invoice.RecipientContactNo + '</td>' +
+               ' </tr>'+
+               ' <tr>'+
+                    '<th colspan="2">Delivery Address</th>'+
+                    '<td align="center" colspan="3">' + invoice.DeliveryAddress + '</td>' +
+                '</tr>'+
+               ' <tr>'+
+                    '<th colspan="5"><br/></th>'+
+                '</tr>'+
+               ' <tr>'+
+                   '<th>Item#</th> <th>Item Name </th><th> Quantity</th><th>Price </th><th>Total </th>'+
+               ' </tr>';
+                for(var i=0;i<invoice.Item.length;i++)
+                {
+                    htmlstring += '<tr>' +
+                    '<td>'+
+                    i+
+                    '</td>'+
+                    '<td>'+
+                    invoice.Item[i].Name+
+                    '</td>'+
+                    '<td align="center">'+
+                    invoice.Quantity[i]+
+                    '</td>'+
+                    '<td>'+
+                    invoice.Item[i].Price+
+                    '</td>'+
+                    '<td align="right">' +
+                    invoice.Price[i]+
+                    '</td></tr>';
+                }
+                htmlstring +='<tr>'+
+                '<td colspan="4" align="right"></td>'+
+               ' <td align="right">'+invoice.Total+'</td>' +
+           ' </tr>'+
+            '<tr>'+
+                '<td colspan="4" align="right">Delivery Charge</td>'+
+               ' <td align="right">+'+invoice.DeliveryCharge+'</td>'+
+           ' </tr>'+
+            '<tr>'+
+                '<td colspan="4" align="right">Discount('+invoice.DiscountinPercentage +'%)</td>'+
+                '<td align="right">-'+invoice.Discount+'</td>'+
+           ' </tr>'+
+            '<tr>'+
+               ' <td colspan="4" align="right">Grand Total</td>'+
+               ' <td align="right"></td>'+
+           ' </tr>'+
+            '<tr>'+
+                '<td colspan="4" align="right">VAT('+invoice.VATinPercentage +'%)</td>'+
+               ' <td align="right">+'+invoice.VAT+'</td>'+
+            '</tr>'+
+            '<tr>'+
+                '<td colspan="4" align="right"></td>'+
+                '<td align="right"><br/></td>'+
+           ' </tr>'+
+            '<tr>'+
+               ' <td colspan="4" align="right">Bill</td>'+
+               ' <td align="right">'+invoice.Bill+'</td>'+
+            '</tr>'+
+        '</table></td>';
+            document.getElementById("invDetailRow-"+invoice.InvoiceNo).innerHTML = htmlstring;
+        }
+</script>

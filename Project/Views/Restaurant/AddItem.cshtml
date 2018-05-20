@@ -1,0 +1,79 @@
+﻿@{
+    ViewBag.Title = "AddItem";
+    Layout = "~/Views/Shared/_RestaurantLayout.cshtml";
+}
+<head>
+    <link href="~/content/bootstrap.min.css" rel="stylesheet">
+</head>
+<body style="background-color:orange">
+    </body>
+<br/> <br/> <br/>
+<fieldset style="width:50%;height:350px">
+    <legend><b>ADD ITEM(S)</b></legend>
+	<form method="post">
+		<br/>
+		<table width="80%" cellpadding="0" cellspacing="10" style="text-align:center;background-color:rgba(0,0,0,0.5);color:white;border-style:inset">
+            <tr>
+                <td colspan="4">@Html.ValidationSummary()</td>
+            </tr>
+			<tr>
+				<td>Item Name</td>
+				<td>:</td>
+				<td style="color:black">@Html.TextBox("name")</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Description</td>
+				<td>:</td>
+				<td style="color:black">@Html.TextBox("Description")</td>
+				<td></td>
+			</tr>	
+			<tr>
+				<td>Proportion/Size</td>
+				<td>:</td>
+				<td style="color:black">@Html.TextBox("Proportion")</td>
+				<td></td>
+			</tr>		
+			<tr>
+				<td>Price</td>
+				<td>:</td>
+				<td style="color:black">@Html.TextBox("Price")</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Type</td>
+				<td>:</td>
+				<td>   
+                   <select name="type" style="color:black">
+                        <option></option>
+                        <option>Burger</option>
+                        <option>Desert</option>
+                        <option>Drink</option>
+                        <option>Pizza</option>
+                        <option>Set Menu</option>
+                        <option>Starter</option>
+                        <option>Cuisine</option>
+                        <option>Rice & Noodles</option>
+                        <option>Kabab</option>
+                        <option>Steaks</option>
+                        <option>Chicken Fry</option>
+                        <option>Beef</option>
+                        <option>Chicken</option>
+                        <option>Fish</option>
+                        <option>Shwarma</option>
+                        <option>Sub-sandwich</option>
+                        <option>Sandwich</option>
+                        <option>Salad</option>
+                        <option>Others</option>
+                   </select>
+				</td>
+				<td></td>
+			</tr>
+		</table>
+		<hr/>
+        <br/>
+		<input type="submit" value="Submit" style="color:orangered;width:100px">
+		<input type="reset" style="color:orangered;width:100px">
+	</form>
+    <br/>
+</fieldset>

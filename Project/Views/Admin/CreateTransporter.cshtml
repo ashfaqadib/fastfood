@@ -1,0 +1,104 @@
+﻿@model Project.Models.EditProfileModel
+
+@{
+    ViewBag.Title = "CreateTransporter";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<head>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body style="background-color:orange">
+    </body>
+<fieldset style="width:50%;height:500px">
+    <legend><b>TRANSPORTER | CREATE</b></legend>
+    <br/>
+    <form action="/Admin/CreateTransporter" method="post">   
+    <table width="60%" height="250px" cellpadding="0" cellspacing="0" style="background-color:rgba(0,0,0,0.5);color:white;border-style:inset;text-align:center">
+            @Html.ValidationSummary()
+            <tr><td colspan="4"></td></tr>
+            <tr>
+                <td>Name</td>
+                <td>:</td>
+                <td><input name="name" type="text" value="" style="color:black"></td>
+                <td></td>
+            </tr>
+            <tr><td colspan="4"></td></tr>
+            <tr>
+                <td>Email</td>
+                <td>:</td>
+                <td>
+                    <input name="email" type="text" value="" style="color:black">
+                    <abbr title="hint: sample@example.com"><b>i</b></abbr>
+                </td>
+                <td></td>
+            </tr>
+            <tr><td colspan="4"></td></tr>
+            <tr>
+                <td>Gender</td>
+                <td>:</td>
+                <td>
+                    <input name="gender" type="radio" value="Male">Male
+                    <input name="gender" type="radio" value="Female">Female
+                    <input name="gender" type="radio" value="Other">Other
+                </td>
+                <td></td>
+            </tr>
+            <tr><td colspan="4"></td></tr>
+			<tr>
+				<td valign="top">Date of Birth</td>
+				<td valign="top">:</td>
+				<td>
+                    <select name="dobDay" style="color:black">
+                    <option></option>  
+                    @for(int i=1;i<32;i++)
+                    {
+                        if (@ViewBag.dobDay == i) 
+                            { <option selected>@i</option> }
+                        else { <option>@i</option> }
+                    }
+                    </select>
+                    /
+                    <select name="dobMonth" style="color:black">
+                    <option></option>  
+                    @for(int i=1;i<=12;i++)
+                    {
+                        if (@ViewBag.dobMonth == i) 
+                            { <option selected>@i</option> }
+                        else { <option>@i</option> }
+                    }
+                    </select>
+                    
+                    <select name="dobYear" style="color:black">
+                    <option></option>  
+                    @for(int i=1950;i<2017;i++)
+                    {
+                        if (@ViewBag.dobYear == i) 
+                            { <option selected>@i</option> }
+                        else { <option>@i</option> }
+                    }
+                    </select>
+                    (DD/MM/YEAR)
+				</td>
+				<td></td>
+			</tr>
+            <tr><td colspan="4"></td></tr>
+            <tr>
+                <td>Status</td>
+                <td>:</td>
+                <td>
+                    <select name="status" style="color:black">
+                        <option></option>
+                        <option value="Active" >Active</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Blocked">Blocked</option>
+                    </select>
+                </td>
+                <td></td>
+            </tr>
+        </table>
+        <br>
+        <input type="submit" value="Save" style="width:100px;color:orangered">
+        <a href="/Admin/SearchTransporter?id=0" style="color:red">Back to Search</a>
+    </form>
+</fieldset>
+

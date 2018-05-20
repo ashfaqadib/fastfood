@@ -1,0 +1,21 @@
+﻿
+#signup
+{
+	height:800px;
+	width:500px;
+	position:absolute;
+	top:65%;
+	left:50%;
+	transform:translate(-50%,-50%);
+	background-color:rgba(0,0,0,0.5);
+    color:white;
+}
+#signup input {
+    color:black;
+}
+#signup input[type="submit"]
+{
+	height:30px;
+	width:250px;
+    color:orangered;
+}

@@ -1,0 +1,82 @@
+﻿@{
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+    string gender = Model.Gender;
+    string selectDate = "false";
+}
+<head>
+    <link href="~/content/bootstrap.min.css" rel="stylesheet">
+</head>
+<br/> <br/>
+<fieldset style="width:80%;height:400px">
+    <legend><b>PROFILE | EDIT</b></legend>
+	<form method="post">
+		<br/>
+		<table width="60%" height="300px" cellpadding="0" cellspacing="0" style="background-color:rgba(0,0,0,0.5);text-align:center;color:white;border-style:inset">
+            <tr><td colspan="4"></td></tr>
+            <tr>
+                <td colspan="4">@Html.ValidationSummary()</td>
+            </tr>
+			<tr>
+				<td>Name</td>
+				<td>:</td>
+				<td style="color:black">@Html.TextBox("name")</td>
+                
+				<td></td>
+			</tr>		
+			<tr><td colspan="4"></td></tr>
+			<tr>
+				<td>Gender</td>
+				<td>:</td>
+				<td>   
+					@Html.RadioButton("gender","Male",(gender=="Male"))Male
+					@Html.RadioButton("gender","Female",(gender=="Female"))Female
+					@Html.RadioButton("gender","Other",(gender=="Others"))Other
+				</td>
+				<td></td>
+			</tr>		
+			<tr><td colspan="4"></td></tr>
+			<tr>
+				<td valign="top">Date of Birth</td>
+				<td valign="top">:</td>
+				<td>
+                    <select name="dobDay" style="color:black">
+                    <option></option>  
+                    @for(int i=1;i<32;i++)
+                    {
+                        if (@ViewBag.dobDay == i) 
+                            { <option selected>@i</option> }
+                        else { <option>@i</option> }
+                    }
+                    </select>
+                    /
+                    <select name="dobMonth" style="color:black">
+                    <option></option>  
+                    @for(int i=1;i<=12;i++)
+                    {
+                        if (@ViewBag.dobMonth == i) 
+                            { <option selected>@i</option> }
+                        else { <option>@i</option> }
+                    }
+                    </select>
+                    /
+                    <select name="dobYear" style="color:black">
+                    <option></option>  
+                    @for(int i=1950;i<2017;i++)
+                    {
+                        if (@ViewBag.dobYear == i) 
+                            { <option selected>@i</option> }
+                        else { <option>@i</option> }
+                    }
+                    </select>
+                    (DD/MM/YEAR)
+				</td>
+				<td></td>
+			</tr>
+            <tr><td colspan="4"></td></tr>
+		</table>
+		<hr/>
+        <br/ style="padding-top:5%">
+		<input type="submit" value="Submit" style="width:100px;color:orangered">
+		<input type="reset" style="width:100px;color:orangered">
+	</form>
+

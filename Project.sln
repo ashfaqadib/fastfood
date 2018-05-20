@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project", "Project\Project.csproj", "{16CBCD46-0701-4B13-9798-64464D3D9D21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.Entity", "Project.Entity\Project.Entity.csproj", "{687A0F79-E203-4599-B2B4-897FE4558CB3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.Data", "Project.Data\Project.Data.csproj", "{D9C7AF04-FE3F-4B5C-AFB2-826AC40EF125}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.Core", "Project.Core\Project.Core.csproj", "{EEE18DD2-3A33-444D-A0E3-D0CD884A4A52}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 5
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://aoneadib.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Project\\Project.csproj
+		SccProjectName1 = Project
+		SccLocalPath1 = Project
+		SccProjectUniqueName2 = Project.Entity\\Project.Entity.csproj
+		SccProjectName2 = Project.Entity
+		SccLocalPath2 = Project.Entity
+		SccProjectUniqueName3 = Project.Data\\Project.Data.csproj
+		SccProjectName3 = Project.Data
+		SccLocalPath3 = Project.Data
+		SccProjectUniqueName4 = Project.Core\\Project.Core.csproj
+		SccProjectName4 = Project.Core
+		SccLocalPath4 = Project.Core
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{16CBCD46-0701-4B13-9798-64464D3D9D21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16CBCD46-0701-4B13-9798-64464D3D9D21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16CBCD46-0701-4B13-9798-64464D3D9D21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16CBCD46-0701-4B13-9798-64464D3D9D21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{687A0F79-E203-4599-B2B4-897FE4558CB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{687A0F79-E203-4599-B2B4-897FE4558CB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{687A0F79-E203-4599-B2B4-897FE4558CB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{687A0F79-E203-4599-B2B4-897FE4558CB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9C7AF04-FE3F-4B5C-AFB2-826AC40EF125}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9C7AF04-FE3F-4B5C-AFB2-826AC40EF125}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9C7AF04-FE3F-4B5C-AFB2-826AC40EF125}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9C7AF04-FE3F-4B5C-AFB2-826AC40EF125}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEE18DD2-3A33-444D-A0E3-D0CD884A4A52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEE18DD2-3A33-444D-A0E3-D0CD884A4A52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEE18DD2-3A33-444D-A0E3-D0CD884A4A52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEE18DD2-3A33-444D-A0E3-D0CD884A4A52}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,125 @@
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+#map {
+    height: 30%;
+    width: 50%;
+}
+#searchParent {
+    position: relative;
+}
+
+#searchChild1 {
+    position: absolute;
+    top: 0;
+}
+
+#searchChild2 {
+    position: absolute;
+    float:left;
+}
+.menu button {
+    float:right;
+    background:red;
+    color:white;
+    border-radius:0 8px 8px 0;
+    cursor:pointer;
+    position:relative;
+    padding:10px;
+    font-family:sans-serif;
+    border:none;
+    font-size:16px;
+}
+.container * {
+    margin:5px;
+    padding:0;
+}
+.container {
+   
+}
+    .container a {
+        display:block;
+        float:left;
+        margin-bottom:25px;
+        
+    }
+        .container a:nth-child(3n+2) {
+            margin:5px 25px 25px 25px;
+        }
+        .container a img {
+            display:block;
+            border:groove;
+        }
+.names {
+     border:groove;
+     color:black;
+}
+    .names h2 {
+        font-family:sans-serif;
+        position:relative;
+        
+    }
+
+      .fwimage1 {
+    background-image: url(../../image/parallax03.jpg);
+    width: 60%;
+    height: 200px;
+    background-repeat:no-repeat;
+    background-size:cover;
+    margin:auto;
+    padding:0;
+}
+ .divider3 { background-color: red;
+    height: 8px;
+    width: 1500px;
+    margin:auto;
+}
+  .divider2 { background-color: red;
+    height: 5px;
+    width: 1500px;
+    margin:auto;
+}
+  .homesub {
+    font-family:sans-serif;
+    margin:0;
+    padding:2% 0% 0% 30%;
+    font-size:30px;
+    color:black;
+}
+.homesub1 {
+    font-family:sans-serif;
+    margin:0;
+    padding:1% 0% 0% 40%;
+    font-size:30px;
+    color:black;
+}
+.homesub2 {
+    font-family:sans-serif;
+    margin:0.5% 0% 0% 35%;
+    /*padding:0.5% 0% 0% 30%;*/
+    font-size:30px;
+    color:black;
+    /*background-color:white;*/
+    display:inline-block;
+}
+.buttonstart {
+    background:green;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+    font-family:sans-serif;
+    border:none;
+    font-weight:700;
+}
+.buttonsub {
+    background:red;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+    font-family:sans-serif;
+    border:none;
+    font-weight:700;
+    
+}

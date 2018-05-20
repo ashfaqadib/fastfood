@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "Menu";
+    Layout = "~/Views/Shared/_RestaurantLayout.cshtml";
+}
+
+
+<table border="1" width="60%" cellpadding="10px" style="border-collapse: collapse;float: left;">
+    <tr>
+    <td width="200px" align="center" colspan="3">
+            <img width="100px" src="../image/restaurants/takeout.jpg">
+        <h1><b>Takeout</b></h1>
+    </td>
+
+    </tr>
+    <tr>
+        <td>
+        <br/>
+            @foreach (var items in @Model)
+            {
+                <table border="1" width="60%" align="center" cellpadding="10px" style="border-collapse: collapse;">
+                <tr><td align="center" colspan="3"><h2>@items[0].Type</h2></td></tr>
+                <tr>
+                        <td align="center">Item</td>
+                        <td align="center">Proportion/Size</td>
+                        <td align="center">Price</td>
+                </tr>        
+                @foreach(var item in items)
+                {
+                    <tr>
+                         <td align="center"><h3>@item.Name</h3><br/>@item.Description</td>
+                         <td align="center">@item.Proportion</td>
+                         <td align="center">@item.Price</td>
+                    </tr>
+                }
+                </table>
+                <br/>
+            }
+        </td>
+    </tr>
+</table>
+
+<table border="1" width="30%" cellpadding="10px" style="border-collapse: collapse;float: right;">
+    <tr>
+        <td colspan="6" align="center"> 
+              Cart
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Item#
+        </th>
+        <th>
+            Item Name
+        </th>
+        <th>
+            Restaurant
+        </th>
+        <th>
+            Quantity
+        </th>
+        <th>
+            Price
+        </th>
+        <th>
+            Action
+        </th>
+    </tr>
+    <tr>
+        <td>
+            1
+        </td>
+        <td>
+            Beef Cheese Burger
+        </td>
+        <td>
+            Takeout
+        </td>
+        <td>
+            1
+        </td>
+        <td>
+            250
+        </td>
+        <td>
+            <a href="#">Add</a> | 
+            <a href="#">Remove</a>
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,166 @@
+﻿@{
+    ViewBag.Title = "SearchResult";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+<br/>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<table border="1" width="100%" cellpadding="10px" style="border-collapse: collapse;">
+    <tr>
+        <td colspan="3" align="center">
+            Sort By
+                <select>
+                    <option></option>
+                    <option>Rating</option>
+                    <option>Popularity</option>
+                    <option>New Restaurants</option>
+                </select>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+        <br/> 
+        Tags
+        <br/>
+            <input type="checkbox" id="filter-1" value="Burger">Burger
+            <input type="checkbox" id="filter-2" value="Pizza">Pizza
+            <input type="checkbox" id="filter-3" value="Sandwich">Sandwich
+            <input type="checkbox" id="filter-4" value="Set Menu">Set Menu
+            <input type="checkbox" id="filter-5" value="Desert">Desert
+            <input type="checkbox" id="filter-6" value="Steak">Steak
+            <input type="checkbox" id="filter-7" value="Kabab">Kabab
+            <input type="checkbox" id="filter-8" value="Other">Other
+        <button onclick="ApplyFilter()">Apply Filter</button><br/> <br/>
+        </td>
+    </tr>
+    <tr>
+    <td colspan="3">
+    <table id="selectedRestaurants"  border="1" width="100%" cellpadding="10px" style="border-collapse: collapse;background: rgba(0, 0, 0,0.5);color:white;">
+    @foreach (var restaurant in @Model.openRestaurants)
+    {
+    <tr>
+        <td width="120px" align="center">
+            <br/>
+            <a href= "/Customer/Menu?id=@restaurant.Id">
+                <img width="100px" src="@restaurant.ImageLocation"><br/>
+            </a>
+                @for(int i=1;i<=@restaurant.Rating;i++)
+                {
+                    <img width="20px" src="../../image/star.png"> 
+                }
+                @if (@restaurant.Rating - (int)@restaurant.Rating != 0)
+                {
+                    if (@restaurant.Rating - (int)@restaurant.Rating > 0.4)
+                    {
+                    <img height="20px" src="../../image/halfstar4.png">
+                    }
+                }
+        </td>
+        <td>
+            <b>@restaurant.Name</b> <span style="color:green">Open</span>
+            <hr/>
+            Open Hours: @restaurant.OpenHours | Minimum Order: @restaurant.MinimumOrder tk.
+        </td>
+        <td width="100px" align="center">
+            <button onclick="showMenu(@restaurant.Id)">Show Menu</button><br/> <br/>
+            <button onclick="writeReview(@restaurant.Id)">Write Review</button>
+        </td>
+    </tr>
+    }
+    @foreach (var restaurant in @Model.closedRestaurants)
+    {
+    <tr>
+        <td width="120px" align="center">
+            <br/>
+            <a href= "/Customer/Menu?id=@restaurant.Id">
+                <img width="100px" src="@restaurant.ImageLocation"><br/>
+            </a>
+                @for(int i=1;i<=@restaurant.Rating;i++)
+                {
+                    <img width="20px" src="../../image/star.png"> 
+                }
+                @if (@restaurant.Rating - (int)@restaurant.Rating != 0)
+                {
+                    if (@restaurant.Rating - (int)@restaurant.Rating > 0.4)
+                    {
+                    <img height="20px" src="../../image/halfstar4.png">
+                    }
+                }
+        </td>
+        <td>
+            <b>@restaurant.Name</b> <span style="color:red">Closed</span>
+            <hr/>
+            Open Hours: @restaurant.OpenHours | Minimum Order: @restaurant.MinimumOrder tk.
+        </td>
+        <td width="100px" align="center">
+            <button onclick="showMenu(@restaurant.Id)">Show Menu</button><br/> <br/>
+            <button onclick="writeReview(@restaurant.Id)">Write Review</button>
+        </td>
+    </tr>
+    }
+    </table>
+    </td>
+    </tr>
+</table>
+<script>
+    function showMenu(id) {
+        location = "/Customer/Menu?id=" + id;
+    }
+    function writeReview(id) {
+        location = "/Customer/WriteReview?restaurantId=" + id;
+    }
+    function ApplyFilter() {
+        var filters = [];
+        for (var i = 1; i < 9; i++) {
+            if ($("#filter-" + i).is(':checked')) filters.push($("#filter-" + i).val());
+        }
+        if (filters.length > 0) {
+            $.ajax({
+                type: "POST",
+                url: '/Customer/ApplyFilter',
+                dataType: "json",
+                data: { filters: filters },
+                success: function (restaurants) {
+                    var htmlw = "";
+                    var color = "green";
+                    var status = "Open";
+                    var restaurant = restaurants.openRestaurants;
+                    for (i = 0; i < 2; i++) {
+                        if (i == 1) restaurant = restaurants.closedRestaurants;
+                        if (i == 1) color = "red";
+                        if (i == 1) status = "Closed";
+                        for (var rest in restaurant) {
+                            htmlw += '<tr>' +
+                                    '<td width="120px" align="center">' +
+                                       ' <a href= "/Public/Menu?id=' + restaurant[rest].Id + '">' +
+                                        '<img width="100px" src=' + restaurant[rest].ImageLocation + '><br/>';
+                            for(var i=1;i<=restaurant[rest].Rating;i++)
+                            {
+                                htmlw +='<img width="20px" src="../../image/star.png">';
+                            }
+                            if (restaurant[rest].Rating - parseInt(restaurant[rest].Rating) > 0.4)
+                            {
+                                htmlw += '<img height="20px" src="../../image/halfstar.png">';
+                            }
+                            htmlw +='</a>' +
+                                    '</td>' +
+                                    '<td>' +
+                                        '<b>' + restaurant[rest].Name + '</b> <span style="color:' + color + '">' + status + '</span>' +
+                                        '<hr/>' +
+                                        'Open Hours: ' + restaurant[rest].OpenHours + ' | Minimum Order: ' + restaurant[rest].MinimumOrder + ' tk.' +
+                                    '</td>' +
+                                    '<td width="100px" align="center">' +
+                                        '<button onclick="showMenu(' + restaurant[rest].Id + ')">Show Menu</button>' +
+                                        '<button onclick="writeReview(' + restaurant[rest].Id + ')">Write Review</button>' +
+                                    '</td>' +
+                                    '</tr>';
+                        }
+                    }
+                    $("#selectedRestaurants").html(htmlw);
+                },
+                error: function (xhr) {
+                    console.log({ filters: filters });
+                }
+            });
+        }
+    }
+</script>

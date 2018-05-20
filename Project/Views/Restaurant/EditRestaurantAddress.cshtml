@@ -1,0 +1,98 @@
+﻿@{
+    Layout = "~/Views/Shared/_RestaurantLayout.cshtml";
+}
+<head>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    </head>
+<body style="background-color:orange;color:white">
+    </body>
+<fieldset style="width:50%;height:350px">
+    <legend><b>Edit Restaurant Address</b></legend>
+	<form method="post">
+		<br/>
+		<table width="100%" cellpadding="20" cellspacing="20">
+            <tr>
+                <td colspan="4">@Html.ValidationSummary()</td>
+            </tr>
+			<tr>
+				<td>District</td>
+				<td>:</td>
+				<td>
+                    <select name="district" onchange = "myFunction(this)">
+                        <option></option>
+                        <option>Dhaka</option>
+                        <option>Chittagong</option>
+                        <option>Rajshahi</option>
+                        <option>Barishal</option>
+                        <option>Sylhet</option>
+                        <option>Comilla</option>
+                        <option>Khulna</option>
+                    </select>
+				</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Area</td>
+				<td>:</td>
+				<td>
+                    <select id="area">
+                    </select>
+				</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td valign="top">Road#</td>
+				<td valign="top">:</td>
+				<td>
+                    @Html.TextBox("road")
+				</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>House#</td>
+				<td>:</td>
+				<td>
+                    @Html.TextBox("house")
+				</td>
+				<td></td>
+			</tr>	
+			<tr>
+				<td>Flat#</td>
+				<td>:</td>
+				<td>@Html.TextBox("flat")</td>
+                
+				<td></td>
+			</tr>	
+		</table>
+		<hr/>
+        <br/ style="padding-top:5%">
+		<input type="submit" value="Submit">
+		<input type="reset">
+	</form>
+    <br/>
+</fieldset>
+
+
+<script>
+    function myFunction(district) {
+
+        var areaSelect = document.getElementById("area");
+        areaSelect.innerHTML = "<option></option>";
+        var dhakaAreas = ['Mirpur',1, 'Shyamoli',2, 'Mohammadpur',2];
+        var chittagongAreas = ['CDA',12, 'Khulshi',13, 'Agrabad',12];
+        var sylhetAreas = ['Baluchor',26, 'Baghbari R/A',26, 'Kumar Para',30];
+
+        if (district.value == "Dhaka") var currentArea = dhakaAreas;
+        else if (district.value == "Chittagong") var currentArea = chittagongAreas;
+        else if (district.value == "Sylhet") var currentArea = sylhetAreas;
+
+        for(var i=0;i<currentArea.length;i++) {
+            areaSelect.innerHTML += '<option value="' + currentArea[i + 1] + '">' + currentArea[i] + "</option>";
+            i++;
+        }
+    }
+    function search() {
+        var region = document.getElementById("areaSelect").value;
+        location = "/Customer/Start?region=" + region;
+    }
+</script>

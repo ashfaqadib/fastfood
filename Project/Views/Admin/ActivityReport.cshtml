@@ -1,0 +1,249 @@
+﻿@{
+    ViewBag.Title = "ActivityReport";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<head>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body style="background-color:orange">
+    </body>
+<img src="@Url.Action("ActivityChart")" style="border:5px inset;border-color:red">
+<br><br>
+<fieldset style="width:50%">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color:rgba(255, 0, 0,0.5);color:white;text-align:center;border-style:inset">
+        <tr>
+            <td>
+                <b>Inactive Admins</b>
+            </td>
+            <td align="right">
+                <input type="submit" value="Print" style="color:orangered"/>
+            </td>
+        </tr>
+    </table>
+</fieldset>
+
+
+<fieldset style="width:50%">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color:rgba(0, 0, 0,0.5);color:white;">
+        
+        <tr>  
+            <td><b>Inactive since 3 months (Total: @ViewBag.inactiveAdmin3Months)</b></td>
+        </tr>
+        <tr>      
+            <td>
+                <table cellspacing="0" cellpadding="20" border="1" width="100%" >   
+                @foreach (var item in ViewBag.show3MonthsInactiveAdmin)   
+                { 
+                    <tr>
+                        <td> @item.Name</td>
+                        <td> Last logged in @ViewBag.lastOnline3MonthsInactiveAdmin  days ago</td>        
+                    </tr>
+                }
+                </table>
+            </td>          
+        </tr>
+        <tr> <hr/> <tr/>
+        <tr>  
+    </table>  
+</fieldset>
+
+ <fieldset style="width:50%">  
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color:rgba(0, 0, 0,0.5);color:white;">
+            <td><b>Inactive since 6 months (Total: @ViewBag.inactiveAdmin6Months)</b></td>
+        </tr>
+        <tr>        
+            <td>
+                <table cellspacing="0" cellpadding="5" border="1" width="100%">
+                    @foreach (var item in ViewBag.show6MonthsInactiveAdmin)   
+                    { 
+                        <tr>
+                            <td> @item.Name</td>
+                            <td> Last logged in @ViewBag.lastOnline6MonthsInactiveAdmin  days ago</td>        
+                        </tr>
+                    }
+                </table>
+            </td>          
+        </tr>
+    </table>
+</fieldset>
+
+<br/> <br/>
+
+<fieldset style="width:50%">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color:rgba(255, 0, 0,0.5);color:white;text-align:center;border-style:inset">
+        <tr>
+            <td>
+                <b>Inactive Users</b>
+            </td>
+            <td align="right">
+                <input type="submit" value="Print" style="color:orangered"/>
+            </td>
+        </tr>
+    </table>
+</fieldset>
+
+<fieldset style="width:50%">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color:rgba(0, 0, 0,0.5);color:white;">
+        
+        <tr>  
+            <td><b>Inactive since 3 months (Total: @ViewBag.inactiveUser3Months)</b></td>
+        </tr>
+        <tr>      
+            <td>
+                <table cellspacing="0" cellpadding="20" border="1" width="100%">   
+                @foreach (var item in ViewBag.show3Months)   
+                { 
+                    <tr>
+                        <td> @item.Name</td>
+                        <td> Last logged in @ViewBag.lastOnline3Months  days ago</td>        
+                    </tr>
+                }
+                </table>
+            </td>          
+        </tr>
+        <tr> <hr/> <tr/>
+        <tr>  
+    </table>  
+</fieldset>
+
+ <fieldset style="width:50%">  
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color:rgba(0, 0, 0,0.5);color:white;">
+            <td><b>Inactive since 6 months (Total: @ViewBag.inactiveUser6Months)</b></td>
+        </tr>
+        <tr>        
+            <td>
+                <table cellspacing="0" cellpadding="5" border="1" width="100%">
+                    @foreach (var item in ViewBag.show6Months)   
+                    { 
+                        <tr>
+                            <td> @item.Name</td>
+                            <td> Last logged in @ViewBag.lastOnline6Months  days ago</td>        
+                        </tr>
+                    }
+                </table>
+            </td>          
+        </tr>
+    </table>
+</fieldset>
+
+
+<br/> <br/>
+
+<fieldset style="width:50%">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color:rgba(255, 0, 0,0.5);color:white;text-align:center;border-style:inset">
+        <tr>
+            <td>
+                <b>Inactive Transporter</b>
+            </td>
+            <td align="right">
+                <input type="submit" value="Print" style="color:orangered"/>
+            </td>
+        </tr>
+    </table>
+</fieldset>
+
+<fieldset style="width:50%">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color:rgba(0, 0, 0,0.5);color:white;">
+        
+        <tr>  
+            <td><b>Inactive since 3 months (Total: @ViewBag.inactiveTransporter3Months)</b></td>
+        </tr>
+        <tr>      
+            <td>
+                <table cellspacing="0" cellpadding="20" border="1" width="100%" >   
+                @foreach (var item in ViewBag.show3MonthsInactiveTransporter)   
+                { 
+                    <tr>
+                        <td> @item.Name</td>
+                        <td> Last logged in @ViewBag.lastOnline3MonthsInactiveTransporter  days ago</td>        
+                    </tr>
+                }
+                </table>
+            </td>          
+        </tr>
+        <tr> <hr/> <tr/>
+        <tr>  
+    </table>  
+</fieldset>
+
+ <fieldset style="width:50%">  
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color:rgba(0, 0, 0,0.5);color:white;">
+            <td><b>Inactive since 6 months (Total: @ViewBag.inactiveTransporter6Months)</b></td>
+        </tr>
+        <tr>        
+            <td>
+                <table cellspacing="0" cellpadding="5" border="1" width="100%">
+                    @foreach (var item in ViewBag.show6MonthsInactiveTransporter)   
+                    { 
+                        <tr>
+                            <td> @item.Name</td>
+                            <td> Last logged in @ViewBag.lastOnline6MonthsInactiveTransporter  days ago</td>        
+                        </tr>
+                    }
+                </table>
+            </td>          
+        </tr>
+    </table>
+</fieldset>
+
+
+<br/> <br/>
+
+
+<fieldset style="width:50%">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color:rgba(255, 0, 0,0.5);color:white;text-align:center;border-style:inset">
+        <tr>
+            <td>
+                <b>Inactive Restuarants</b>
+            </td>
+            <td align="right">
+                <input type="submit" value="Print" style="color:orangered"/>
+            </td>
+        </tr>
+    </table>
+</fieldset>
+
+
+<fieldset style="width:50%">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color:rgba(0, 0, 0,0.5);color:white;">
+        
+        <tr>  
+            <td><b>Inactive since 3 months (Total: @ViewBag.inactiveRestuarant3Months)</b></td>
+        </tr>
+        <tr>      
+            <td>
+                <table cellspacing="0" cellpadding="20" border="1" width="100%">   
+                @foreach (var item in ViewBag.show3MonthsInactiveRestuarant)   
+                { 
+                    <tr>
+                        <td> @item.Name</td>
+                        <td> Last logged in @ViewBag.lastOnline3MonthsInactiveRestuarant  days ago</td>        
+                    </tr>
+                }
+                </table>
+            </td>          
+        </tr>
+        <tr> <hr/> <tr/>
+        <tr>  
+    </table>  
+</fieldset>
+
+ <fieldset style="width:50%">  
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color:rgba(0, 0, 0,0.5);color:white;">
+            <td><b>Inactive since 6 months (Total: @ViewBag.inactiveRestuarant6Months)</b></td>
+        </tr>
+        <tr>        
+            <td>
+                <table cellspacing="0" cellpadding="5" border="1" width="100%">
+                    @foreach (var item in ViewBag.show6MonthsInactiveRestuarant)   
+                    { 
+                        <tr>
+                            <td> @item.Name</td>
+                            <td> Last logged in @ViewBag.lastOnline6MonthsInactiveRestuarant  days ago</td>        
+                        </tr>
+                    }
+                </table>
+            </td>          
+        </tr>
+    </table>
+</fieldset>

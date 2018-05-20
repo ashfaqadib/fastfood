@@ -1,0 +1,100 @@
+﻿@{
+    ViewBag.Title = "ShowReviews";
+    Layout = "~/Views/Shared/_PublicLayout.cshtml";
+}
+
+
+<table border="1" width="100%">
+        @foreach(var review in @Model){
+    <tr style="color:aliceblue">
+        <td>            
+        <table align="center" style="background-color:rgba(0,0,0,0.5);width:700px">    
+            <tr><td>Reviewer: </td><td>@review.Reviewer</td></tr>
+            <tr><td>Reviewed On: </td><td>@review.Time</td></tr>
+            <tr><td>Restaurant: </td><td>@review.RestaurantName</td></tr>
+            <tr><td>Rating: </td><td>@review.Rating</td></tr>
+            <tr><td>Review: </td><td>@review.Description</td></tr>
+            @if(@review.Images!=null) {
+            <tr><td></td><td>
+            @foreach(var img in @review.Images)
+            {
+                <img width="300px" src="../../@img"/>
+            }
+            </td></tr>
+            }
+            <tr>
+                <td>Comments</td>
+                <td ><textarea rows="4" cols="50" id="commentText-@review.ReviewId" name="commentText-@review.ReviewId"></textarea><br/>
+                <button onclick="submitComment(@review.ReviewId)">Comment</button>
+                </td>
+            </tr>
+
+            @if(@review.CommentModels!=null) {
+                var length = 2;
+                if (@review.CommentModels.Count <= 2) { length = @review.CommentModels.Count; }
+            <tr><td></td><td id="commentTable-@review.ReviewId">
+            @for (int i = 0; i < length; i++)
+            {
+                <table>
+                    <tr><td><big><b>@review.CommentModels[i].Commenter</b></big> <small>@review.CommentModels[i].Time</small></td></tr>
+                    <tr><td>@review.CommentModels[i].CommentText</td></tr>
+                </table>
+            }
+            <button onclick="ShowMoreComments(@review.ReviewId)">Show More Comments</button>
+            </td></tr>
+            }
+        </table>
+        </td>
+    </tr>
+    }
+</table>
+
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+<script>
+    function submitComment(reviewId) {
+        alert("You have to be a customer to submit a comment.");
+    }
+
+/*
+        var xhttp = new XMLHttpRequest();
+
+        xhttp.open("POST", "/Customer/AddComment", true);
+        xhttp.setRequestHeader('contentType', 'application/json');
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+                alert(this.responseText);
+                //alert(comment.ReviewId);
+            }
+        };
+        xhttp.send(comment);
+
+        //alert(comment.ReviewId);
+    }
+    */
+
+    function ShowMoreComments(reviewId) {
+        $.ajax({
+            type: "GET",
+            url: '/Public/ShowAllComments?reviewId=' + reviewId,
+            dataType: "json",
+            success: function (res) {
+                $("#commentTable-" + reviewId).html("");
+                for (var comment in res) {
+                    $("#commentTable-" + reviewId).append(
+                    "<table>" +
+                        "<tr><td><big><b>" + res[comment].Commenter + "</b></big> <small>" + res[comment].Time + "</small></td></tr>" +
+                        "<tr><td>" + res[comment].CommentText + "</td></tr>" +
+                    "</table>"
+                    );
+                }
+                console.log(res);
+            },
+            error: function (xhr) {
+                alert(xhr.error);
+            }
+        });
+    }
+</script>

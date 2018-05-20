@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "WriteReview";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+
+<form method="post" enctype = "multipart/form-data">
+    <input type="hidden" id="restaurantId" name="restaurantId" value="@Model">
+<table height="250px" width="50%" style="background-color:rgba(0,0,0,0.5);text-align:center">
+    <tr height="50%"><td><font size="3" color="white">Description</td><td><input style="height:100px"  id="Description" name="Description"/></td></tr>
+    <tr><td><font size="3" color="white">Rating</td><td><input id="Rating" name="Rating"/></td></tr>
+    <tr><td><font size="3" color="white">Upload Image(s)</td><td><input type="file" id="images" name="images" multiple/></td></tr>
+</table>
+    <br>
+    <input type="submit" style="width:100px;color:orangered"/>
+</form>

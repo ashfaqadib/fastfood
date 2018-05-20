@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "SalesReport";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<body style="background-color:orange">
+    </body>
+    <img src="@Url.Action("totalSalesChart")" style="border:2px inset;border-color:red;background-color:rgba(0,0,0,0.5)" >
+
+<fieldset style="width:50%">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color:rgba(0,0,0,0.5);text-align:center;color:white;border-style:inset">
+        <tr>
+            <td>
+                <b>Sales | STATISTICS</b>
+            </td>
+            <td align="right">
+                <input type="submit" value="Print"/>
+            </td>
+        </tr>
+    </table>
+
+<table align="left" width="50%" cellspacing="5" border="1" cellpadding="5">
+    <tr style="background-color:rgba(0,0,0,0.5);color:white">
+        <th align="left">Restuarants</th>
+    </tr>
+    @foreach (var item in ViewBag.Restaurants)
+    {
+        <tr style="background-color:rgba(0,0,0,0.5);color:white">
+        <th align="left">@item.Name</th>
+            </tr>
+    }
+
+</table>
+    <table align="left" width="30%" cellspacing="5" border="1" cellpadding="5">
+    <tr style="background-color:rgba(0,0,0,0.5);color:white">
+        <th align="center">NO OF SALES</th>
+    </tr>
+
+     @foreach (var i in ViewBag.Restaurants)
+    {
+    <tr style="background-color:rgba(0,0,0,0.5);color:white">
+        <th align="center">@i.totalOrder</th>
+             </tr>
+    }
+
+</table>
+    <table align="left" width="20%" cellspacing="5" border="1" cellpadding="5">
+    <tr style="background-color:rgba(0,0,0,0.5);color:white">
+        <th align="center">Details</th>
+    </tr>
+
+     @foreach (var i in ViewBag.Restaurants)
+    {
+    <tr style="background-color:rgba(0,0,0,0.5);color:white">
+        <th align="center"><a href="/Admin/SalesDetails?id=@i.Id" style="color:orange">details</a></th>
+             </tr>
+    }
+</table>
+    </fieldset>
+<br>
+<hr>
+<br>
+

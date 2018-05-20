@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Fast-Food</title>
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+      }
+      #map {
+        height: 30%;
+        width: 50%;
+      }
+</style>
+    <link rel="stylesheet" type="text/css" href="../../CSS/adminstyle.css">
+</head>
+
+<body>
+      <table align="center" cellspacing="0" cellpadding="0" style="width:100%;background-color:black;">
+                <tr>
+                    <td rowspan="2">
+                        <a href='@Url.Action("Index", "Restaurant")'>
+                            <img width="80px" src="../../image/logo.png">
+                        </a>
+                    </td>
+                    
+                     <td align="right">
+
+
+                <div id="dropdown" align="left">
+                       <ul>        
+                                             
+                        <li><a href="#">Account</a>
+                           <ul>
+                            <li>@Html.ActionLink("View Account", "Account", "Restaurant")</li>
+                            <li>@Html.ActionLink("Edit Account", "EditAccount", "Restaurant")</li>
+                            <li>@Html.ActionLink("Change Password", "ChangePassword", "Restaurant")</li>
+                          </ul>
+                        </li>
+
+                        <li><a href="#">Restaurant</a>
+                           <ul>
+                            <li>@Html.ActionLink("Edit Info", "EditAccount", "Restaurant")</li>
+                            <li>@Html.ActionLink("Edit Address", "EditRestaurantAddress", "Restaurant")</li>
+                          </ul>
+                        </li>
+                           
+
+                        <li><a href="#">Items</a>
+                           <ul>
+                            <li>@Html.ActionLink("Add Item", "AddItem", "Restaurant")</li>
+                            <li>@Html.ActionLink("Manage Items", "ManageItems", "Restaurant")</li>
+                          </ul>
+                        </li>
+                       <li><a href="#">@Html.ActionLink("Order History", "OrderHistory", "Restaurant")</li>
+                       <li><a href="#">@Html.ActionLink("Logout", "Logout", "Restaurant")</li>
+                 </div>
+                      
+                     </td>
+                    
+                </tr>                                 
+                <tr>
+                    <td>
+                         @Html.ActionLink("Home", "Index", "Restaurant")
+                         @Html.ActionLink("Logout","Logout","Restaurant")
+                    </td>
+                </tr>
+            </table>
+    <br/>
+       <div align="center" style="width:100%; height:100%;">
+            @RenderBody()
+       </div>
+</body>
+</html>

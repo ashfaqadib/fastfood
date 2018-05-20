@@ -1,0 +1,386 @@
+﻿ @{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<head>
+    <link href="content/bootstrap.min.css" rel="stylesheet">
+    <link href="~/CSS/slideshow.css" rel="stylesheet" />
+
+</head>
+<body style="background-color:orange">
+    </body>
+
+<div id="confirmModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="close">&times;</span>
+      <h2>Change Order Status</h2>
+    </div>
+    <div class="modal-body">
+      <p>Are you sure you want to change the order status?</p>
+    </div>
+    <div class="modal-footer">
+    </div>
+  </div>
+</div>
+
+
+<fieldset>
+    <legend><b>ORDERS</b></legend>
+    <br />
+<table id="homeTable" border="0" width="80%" cellspacing="1" cellpadding="10px" style="border-collapse:collapse">
+
+</table>
+</fieldset>
+
+<br />
+<br />
+<br />
+
+<fieldset>
+    <legend><b>Current Tasks</b></legend>
+<table id="homeTable2" border="0" width="80%" cellspacing="1" cellpadding="10px" style="border-collapse:collapse">
+
+</table>
+</fieldset>
+
+<br />
+<br />
+<br />
+
+<div  class="fwimage1" style="background: rgba(0, 0, 0,0.5)">
+
+@using (Html.BeginForm("UploadImage", "Admin", FormMethod.Post, new { enctype="multipart/form-data"}))
+{
+    <table cellpadding="10">
+        <tr>
+            <td><span style="color:white"><h4>Upload Advertisement Image</h4></span></td>
+            <td> <input type="file" name="photo" multiple></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="middle"><input type="submit" value="Upload" ></td>
+        </tr>
+    </table>
+}
+<br />
+<br />
+<div class="slideshow-container">
+ @foreach (var item in ViewBag.files)
+       {
+     <div class="mySlides fade">
+
+               <img src="@Html.DisplayFor(modelItem => item)" width="100%"/>
+         </div>
+     
+ }
+</div>
+<br>
+
+<div style="text-align:center">
+  <span class="dot"></span> 
+  <span class="dot"></span> 
+  <span class="dot"></span> 
+</div>
+    
+</div>
+<script>
+
+    var slideIndex = 0;
+    showSlides();
+
+    function showSlides() {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("dot");
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slideIndex++;
+        if (slideIndex > slides.length) { slideIndex = 1 }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+        setTimeout(showSlides, 2000); // Change image every 2 seconds
+    }
+
+</script>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+    <script>
+
+        var modal = document.getElementById('confirmModal');
+
+        $.ajax({
+            type: "GET",
+            url: '/Admin/GetInvoices',
+            dataType: "json",
+            success: function (res) {
+                if (res != "") prepareTable(res);
+                else $("#homeTable").html("<tr><td align='center'>There are no pending orders.</td></tr>");
+
+            },
+            error: function (xhr) {
+                alert(xhr.error);
+            }
+        });
+
+        $.ajax({
+            type: "GET",
+            url: '/Admin/GetTasks',
+            dataType: "json",
+            success: function (res) {
+                if (res != "") prepareTable2(res);
+                else $("#homeTable2").html("<tr><td align='center'>There are no pending orders.</td></tr>");
+
+            },
+            error: function (xhr) {
+                alert(xhr.error);
+            }
+        });
+
+        function closeModal(invId) {
+            $(".modal-footer").html("");
+            modal.style.display = "none";
+            $("#changeStatus-" + invId).val("");
+        }
+
+        function confirmChangeStatus(invId) {
+            $(".modal-footer").html('<h3><button onclick="changeStatus(' + invId + ')">Yes</button> <button onclick="closeModal(' + invId + ')">No</button></h3>');
+            modal.style.display = "block";
+        }
+
+
+        function showInvoiceDetails(invId) {
+            $.ajax({
+                type: "GET",
+                url: '/Admin/GetInvoiceDetails?invId=' + invId,
+                dataType: "json",
+                success: function (invoice) {
+                    prepareInvoiceDetailsTable(invoice);
+                    $("#invDetailRow-" + invoice.InvoiceNo).fadeToggle();
+                    //console.log(invoice);
+                },
+                error: function (xhr) {
+                    alert(xhr.error);
+                }
+            });
+        }
+
+        function changeStatus(invId) {
+            modal.style.display = "none";
+            $.ajax({
+                type: "GET",
+                url: '/Admin/ChangeOrderStatus?invId=' + invId + '&status=' + document.getElementById("changeStatus-" + invId).value,
+                dataType: "json",
+                success: function (res) {
+                    prepareTable(res);
+                },
+                error: function (xhr) {
+                    alert(xhr.error);
+                }
+            });
+        }
+
+        function prepareTable(invoices) {
+            document.getElementById("homeTable").innerHTML = '<tr>' +
+                    '<th>' +
+                       'Invoice#' +
+                    '</th>' +
+                    '<th>' +
+                        'Ordered By' +
+                    '</th>' +
+                    '<th>' +
+                        'Order Placed' +
+                    '</th>' +
+                    '<th>' +
+                       ' Bill' +
+                    '</th>' +
+                   ' <th>' +
+                       ' Status' +
+                    '</th>' +
+                    '<th>' +
+                      'Action' +
+                   '</th>' +
+                   '<th>' +
+                      'Change Status' +
+                    '</th>' +
+                '</tr>';
+            for (var inv in invoices) {
+                document.getElementById("homeTable").innerHTML +=
+                '<tr style="background-color:rgba(0,0,0,0.5);color:white;border-style:inset">' +
+                '<td>' +
+                    invoices[inv].InvoiceNo +
+                '</td>' +
+                '<td>' +
+                    invoices[inv].OrderOwner +
+                ' </td>' +
+                '<td>' +
+                    invoices[inv].OrderTime +
+                ' </td>' +
+                ' <td>' +
+                    invoices[inv].Bill +
+                ' </td>' +
+                '<td>' +
+                    invoices[inv].Status +
+                ' </td>' +
+                '<td>' +
+                    ' <button onclick="showInvoiceDetails(' + invoices[inv].InvoiceNo + ')" style="background-color:orange;color:black"> <b>Details</b> </button>' +
+                ' </td>' +
+                '<td>' +
+                ' <select id="changeStatus-' + invoices[inv].InvoiceNo + '" onchange="confirmChangeStatus(' + invoices[inv].InvoiceNo + ')" style="color:black">' +
+                    ' <option value=""></option>' +
+                        '<option value="Received">Received</option>' +
+                    ' <option value="Cancelled">Pending</option>' +
+                    ' <option value="Cancelled">On The Way</option>' +
+                    ' <option value="Cancelled">Cancelled</option>' +
+                    ' <option value="Cancelled">Delivered</option>' +
+                ' </select>' +
+            ' </td>' +
+            '</tr>' +
+            '<tr id="invDetailRow-' + invoices[inv].InvoiceNo + '" style="background-color:#F9B384;display:none"></tr>';
+            }
+        }
+
+        function prepareInvoiceDetailsTable(invoice) {
+            var htmlstring = '<td colspan="8"><table border="1" width="100%" cellpadding="10px" style="background-color:rgba(255,165,0,0.5)">' +
+                '<tr>' +
+                    '<td align="center" colspan="5"><b>Invoice#' + invoice.InvoiceNo + '</b></td>' +
+                '</tr>' +
+                '<tr>' +
+                   ' <td align="center" colspan="5"><b>' + invoice.RestaurantName + '</b></td>' +
+                '</tr>' +
+                '<tr>' +
+                    '<td align="center" colspan="5"><small>' + invoice.RestaurantAddress + '</small></td>' +
+                '</tr>' +
+                '<tr>' +
+                   ' <th colspan="2">Recipient</th>' +
+                    '<td align="center" colspan="3">' + invoice.Recipient + '</td>' +
+               ' </tr>' +
+                '<tr>' +
+                    '<th colspan="2">Recipient Contact#</th>' +
+                    '<td align="center" colspan="3">' + invoice.RecipientContactNo + '</td>' +
+               ' </tr>' +
+               ' <tr>' +
+                    '<th colspan="2">Delivery Address</th>' +
+                    '<td align="center" colspan="3">' + invoice.DeliveryAddress + '</td>' +
+                '</tr>' +
+               ' <tr>' +
+                    '<th colspan="5"><br/></th>' +
+                '</tr>' +
+               ' <tr>' +
+                   '<th>Item#</th> <th>Item Name </th><th> Quantity</th><th>Price </th><th>Total </th>' +
+               ' </tr>';
+            for (var i = 0; i < invoice.Item.length; i++) {
+                htmlstring += '<tr>' +
+                '<td>' +
+                i +
+                '</td>' +
+                '<td>' +
+                invoice.Item[i].Name +
+                '</td>' +
+                '<td align="center">' +
+                invoice.Quantity[i] +
+                '</td>' +
+                '<td>' +
+                invoice.Item[i].Price +
+                '</td>' +
+                '<td align="right">' +
+                invoice.Price[i] +
+                '</td></tr>';
+            }
+            htmlstring += '<tr>' +
+            '<td colspan="4" align="right"></td>' +
+           ' <td align="right">' + invoice.Total + '</td>' +
+       ' </tr>' +
+        '<tr>' +
+            '<td colspan="4" align="right">Delivery Charge</td>' +
+           ' <td align="right">+' + invoice.DeliveryCharge + '</td>' +
+       ' </tr>' +
+        '<tr>' +
+            '<td colspan="4" align="right">Discount(' + invoice.DiscountinPercentage + '%)</td>' +
+            '<td align="right">-' + invoice.Discount + '</td>' +
+       ' </tr>' +
+        '<tr>' +
+           ' <td colspan="4" align="right">Grand Total</td>' +
+           ' <td align="right"></td>' +
+       ' </tr>' +
+        '<tr>' +
+            '<td colspan="4" align="right">VAT(' + invoice.VATinPercentage + '%)</td>' +
+           ' <td align="right">+' + invoice.VAT + '</td>' +
+        '</tr>' +
+        '<tr>' +
+            '<td colspan="4" align="right"></td>' +
+            '<td align="right"><br/></td>' +
+       ' </tr>' +
+        '<tr>' +
+           ' <td colspan="4" align="right">Bill</td>' +
+           ' <td align="right">' + invoice.Bill + '</td>' +
+        '</tr>' +
+    '</table></td>';
+            document.getElementById("invDetailRow-" + invoice.InvoiceNo).innerHTML = htmlstring;
+        }
+
+        function prepareTable2(invoices) {
+            document.getElementById("homeTable2").innerHTML = '<tr>' +
+                    '<th>' +
+                       'Invoice#' +
+                    '</th>' +
+                    '<th>' +
+                        'Ordered From' +
+                    '</th>' +
+                    '<th>' +
+                        'Transporter Name' +
+                    '</th>' +
+                    '<th>' +
+                        'Transporter Contact#' +
+                    '</th>' +
+                    '<th>' +
+                        'Delivery Address' +
+                    '</th>' +
+                    '<th>' +
+                        'Token#' +
+                    '</th>' +
+                    '<th>' +
+                       ' Bill' +
+                    '</th>' +
+                    '<th>' +
+                       ' Action' +
+                    '</th>' +
+                '</tr>';
+            for (var inv in invoices) {
+                document.getElementById("homeTable2").innerHTML +=
+                '<tr style="background-color:rgba(0,0,0,0.5);color:white;border-style:inset">' +
+                '<td>' +
+                    invoices[inv].Id +
+                '</td>' +
+                '<td>' +
+                    invoices[inv].RestaurantName +
+                ' </td>' +
+                '<td>' +
+                    invoices[inv].TransporterName +
+                ' </td>' +
+                ' <td>' +
+                    invoices[inv].TranporterContactNo +
+                ' </td>' +
+                ' <td>' +
+                    invoices[inv].DeliveryAddress +
+                ' </td>' +
+                ' <td>' +
+                    invoices[inv].TokenNo +
+                ' </td>' +
+                '<td>' +
+                    invoices[inv].Bill +
+                ' </td>' +
+                '<td>' +
+                    ' <button onclick="showInvoiceDetails(' + invoices[inv].InvoiceNo + ')" style="background-color:red"> <b>Cancel Task</b> </button>' +
+                ' </td>' +
+            '</tr>';
+            }
+        }
+
+</script>

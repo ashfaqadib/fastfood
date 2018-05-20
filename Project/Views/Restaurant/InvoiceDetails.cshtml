@@ -1,0 +1,106 @@
+﻿@{
+    ViewBag.Title = "Cart";
+    Layout = "~/Views/Shared/_RestaurantLayout.cshtml";
+}
+<head>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    </head>
+<body style="background-color:orange">
+    </body>
+<br/> <br/> <br/>
+<fieldset>
+    <legend><b>Invoice</b></legend>
+    <br/>
+<table border="1" width="60%" cellpadding="10px" style="background-color:rgba(0,0,0,0.5);color:white">
+    <tr>
+        <th colspan="5">Invoice#@Model.InvoiceNo</th>
+    </tr>
+    <tr>
+        <th colspan="5">@Model.RestaurantName</th>
+    </tr>
+    <tr>
+        <th colspan="5"><small>@Model.RestaurantAddress</small></th>
+    </tr>
+    <tr>
+        <th colspan="2">Recipient</th>
+        <td colspan="3">@Model.Recipient</td>
+    </tr>
+    <tr>
+        <th colspan="2">Recipient Contact#</th>
+        <td colspan="3">@Model.RecipientContactNo</td>
+    </tr>
+    <tr>
+        <th colspan="2">Delivery Address</th>
+        <td colspan="3">@Model.DeliveryAddress</td>
+    </tr>
+    <tr>
+        <th colspan="5"><br/></th>
+    </tr>
+    <tr>
+        <th>
+            Item#
+        </th>
+        <th>
+            Item Name
+        </th>
+        <th>
+            Quantity
+        </th>
+        <th>
+            Price
+        </th>
+        <th>
+            Total
+        </th>
+    </tr>
+    @for(int i=0;i<@Model.Item.Count;i++)
+    {
+    <tr>
+        <td>
+            @(i+1)
+        </td>
+        <td>
+            @Model.Item[i].Name
+        </td>
+        <td align="center">
+            @Model.Quantity[i]
+        </td>
+        <td>
+            @Model.Item[i].Price
+        </td>
+        <td>
+            @Model.Price[i]
+        </td>
+    </tr>
+    }
+    <tr>
+        <td colspan="4" align="right"></td>
+        <td align="right">@Model.Total</td>
+    </tr>
+    <tr>
+        <td colspan="4" align="right">Delivery Charge</td>
+        <td align="right">+@Model.DeliveryCharge</td>
+    </tr>
+    <tr>
+        <td colspan="4" align="right">Discount(@Model.DiscountinPercentage %)</td>
+        <td align="right">-@Model.Discount</td>
+    </tr>
+    <tr>
+        <td colspan="4" align="right">Grand Total</td>
+        <td align="right">@ViewBag.GrandTotal</td>
+    </tr>
+    <tr>
+        <td colspan="4" align="right">VAT(@Model.VATinPercentage %)</td>
+        <td align="right">+@Model.VAT</td>
+    </tr>
+    <tr>
+        <td colspan="4" align="right"></td>
+        <td align="right"><br/></td>
+    </tr>
+    <tr>
+        <td colspan="4" align="right">Bill</td>
+        <td align="right">@Model.Bill</td>
+    </tr>
+</table>
+    <hr>
+</fieldset>

@@ -1,0 +1,73 @@
+﻿@{
+    ViewBag.Title = "OrderHistory";
+    Layout = "~/Views/Shared/_RestaurantLayout.cshtml";
+}
+<head>
+    <link href="~/content/bootstrap.min.css" rel="stylesheet">
+</head>
+<body style="background-color:orange">
+    </body>
+<br/> <br/>
+<fieldset>
+    <legend><b>ORDER HISTORY</b></legend>
+    <br />
+<table border="0" width="60%" cellspacing="1" cellpadding="10px" style="border-collapse:collapse;">
+    <tr>
+        <th style="text-align:center">
+            Invoice#
+        </th>
+        <th style="text-align:center">
+            Ordered By
+        </th>
+        <th style="text-align:center">
+            Order Placed
+        </th>
+        <th style="text-align:center">
+            Bill
+        </th>
+        <th style="text-align:center">
+            Action
+        </th>
+    </tr>
+    @foreach(var invoices in @Model)
+    {
+     <tr style="background-color:rgba(0,0,0,0.5);color:white;text-align:center;border-style:inset">
+        <td>
+            @invoices.InvoiceNo
+        </td>
+        <td>
+            @invoices.OrderOwner
+        </td>
+        <td>
+            @invoices.OrderTime
+        </td>
+        <td>
+            @invoices.Bill
+        </td>
+        <td>
+            <button onclick="showDetails(@invoices.InvoiceNo)" style="background:red;padding:5px"> <b>Details</b> </button>
+            <button onclick="trackOrder(@invoices.InvoiceNo)" style="background:red;padding:5px"> <b>Track Order</b> </button>
+        </td>
+    </tr>
+    }
+</table>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script>
+        function showDetails(id) {
+            location = "/Restaurant/InvoiceDetails/" + id;
+        }
+        function trackOrder(invId) {
+            console.log(invId);
+            $.ajax({
+                type: "GET",
+                url: '/Restaurant/TrackOrder?invId=' + invId,
+                dataType: "json",
+                success: function (tasks) {
+                    alert("Your order status is: " + tasks);
+                },
+                error: function (xhr) {
+                    alert("Some error occured please try again!");
+                }
+            });
+        }
+    </script>

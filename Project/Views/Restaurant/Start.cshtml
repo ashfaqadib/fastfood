@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "SearchResult";
+    Layout = "~/Views/Shared/_RestaurantLayout.cshtml";
+}
+<br/>
+<table border="1" width="100%" cellpadding="10px" style="border-collapse: collapse;">
+    <tr>
+        <td colspan="3" align="center">
+            <input width="80px"/><button>Search</button>
+            Sort By
+                <select>
+                    <option></option>
+                    <option>Rating</option>
+                    <option>Popularity</option>
+                    <option>New Restaurants</option>
+                </select>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3">
+        Tags
+        <br/>
+        @Html.CheckBox("BengaliItem")Bengali Item
+        @Html.CheckBox("Burger")Burger
+        @Html.CheckBox("Shwarma")Shwarma
+        @Html.CheckBox("ChineseItem")Chinese Item
+        @Html.CheckBox("Soup")Soup
+        @Html.CheckBox("RiceMeal")Rice Meal
+        @Html.CheckBox("Desert")Desert
+        @Html.CheckBox("Spaghetti")Spaghetti
+        </td>
+    </tr>
+    @foreach(var restaurant in @Model)
+    {
+    <tr>
+        <td width="120px" align="center">
+            <a href= "/Restaurant/Menu?id=@restaurant.Id">
+                <img width="100px" src="@restaurant.ImageLocation">
+            </a>
+        </td>
+        <td>
+            <b>@restaurant.Name</b>
+            <hr/>
+            Open Hours: @restaurant.OpenHours | Minimum Order: @restaurant.MinimumOrder tk.
+        </td>
+        <td width="100px" align="center">
+            <button>Show Menu</button>
+        </td>
+    </tr>
+    }
+</table>

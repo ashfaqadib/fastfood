@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Fast-Food</title>
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+      }
+      #map {
+        height: 30%;
+        width: 50%;
+      }
+</style>
+    <link rel="stylesheet" type="text/css" href="../../CSS/adminstyle.css">
+    <link rel="stylesheet" type="text/css" href="../../CSS/sharedStyle.css">
+</head>
+
+<body>
+      <table align="center" cellspacing="0" cellpadding="0" style="width:100%;background-color:black;">
+                <tr>
+                    <td align="left">
+                        <a href='@Url.Action("Index", "Customer")'>
+                            <img width="70px" src="../../image/logo.png">
+                        </a>
+                    </td>  
+                                         
+                <td>
+                <div id="dropdown" align="left">
+                       <ul>                  
+                        <li><a href="#">Account</a>
+                           <ul>
+                            <li>@Html.ActionLink("View Account", "Account", "Customer")</li>
+                            <li>@Html.ActionLink("Edit Account", "EditAccount", "Customer")</li>
+                            <li>@Html.ActionLink("Change Password", "ChangePassword", "Customer")</li>
+                            <li>@Html.ActionLink("Edit Address", "EditAddress", "Customer")</li>
+                          </ul>
+                        </li>
+
+                           <li><a href="#">@Html.ActionLink("Order History", "OrderHistory", "Customer")</li>
+                           <li><a href="#">@Html.ActionLink("Cart", "Cart", "Customer")</li>
+                           <li><a href="#">@Html.ActionLink("Reviews", "ShowReviews", "Customer")</li>
+                           <li><a href="#">@Html.ActionLink("Logout", "Logout", "Customer")</li>
+
+                       </ul>                
+                 </div>
+
+                    <div class="searchParent" align="right">
+                        <div class="searchChild1"><input type="text" id="mainSearch" placeholder="Search Here" style="    padding:10px;
+    border:none;
+    font-size:16px;
+    font-family:sans-serif;"/>
+                        <button id="mainSearchButton" style="    float:right;background:red;color:white;border-radius:0 8px 8px 0;cursor:pointer;
+    position:relative;padding:10px;font-family:sans-serif;border:none;font-size:16px;">Search</button><br/></div>
+                        <div class="searchChild2"><select id="searchSuggestion"  style="min-width:293px;" onchange="autoFill()"></select></div>
+                    </div>
+                </td>
+                </tr>
+            </table>
+       <div align="center" style="width:100%; height:100%;background-color:orange">
+            <br/>
+            @RenderBody()
+       </div>
+</body>
+</html>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script>
+        $("#mainSearch").keyup(function () {
+            $.ajax({
+                type: "GET",
+                url: '/Customer/AutoComplete?val=' + $("#mainSearch").val(),
+                dataType: "json",
+                success: function (autoComplete) {
+                    var searchHtml = "<option>"+autoComplete[0].Name+"</option>";
+                    for (var rest in autoComplete) {
+                        searchHtml += '<option value="' + autoComplete[rest].Name + '">' + autoComplete[rest].Name + '</option>';
+                    }
+                    $("#searchSuggestion").html(searchHtml);
+                },
+                error: function (xhr) {
+                    console.log(xhr);
+                }
+            });
+        });
+        function autoFill() {
+            $("#mainSearch").val($("#searchSuggestion").val())
+        }
+        $("#mainSearchButton").click(function () {
+            location = "/Customer/Start?val=" + $("#mainSearch").val();
+        });
+</script>

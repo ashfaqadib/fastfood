@@ -1,0 +1,68 @@
+﻿@{
+    ViewBag.Title = "Orders";
+    Layout = "~/Views/Shared/_RestaurantLayout.cshtml";
+}
+<head>
+    <link href="~/content/bootstrap.min.css" rel="stylesheet">
+</head>
+<body style="background-color:orange">
+    </body>
+<br/> <br/> <br/>
+<fieldset style="width:50%;height:350px">
+    <legend><b>MANAGE ITEM(S)</b></legend>
+    <br/>
+    <table width="700px" height="300px" cellpadding="0" cellspacing="10" style="background-color:rgba(0,0,0,0.5);text-align:center;color:white;border-style:inset">
+    <tr style="color:black">
+        <th style="text-align:center">
+            Item Id
+        </th>
+        <th style="text-align:center">
+            Item Name
+        </th>
+        <th style="text-align:center">
+            Description
+        </th>
+        <th style="text-align:center">
+            Proportion/Size
+        </th>
+        <th style="text-align:center">
+            Price
+        </th>
+        <th style="text-align:center">
+            Actions
+        </th>
+    </tr>
+    @foreach(var item in @ViewBag.items)
+    {
+    <tr>
+        <td>
+            @item.Id
+        </td>
+        <td>
+            @item.Name
+        </td>
+        <td>
+            @item.Description
+        </td>
+        <td>
+            @item.Proportion
+        </td>
+        <td>
+            @item.Price
+        </td>
+        <td>
+            <button onclick="RemoveItem(@item.Id)" style="background-color:red"> <b>Remove</b> </button>
+            <button onclick="EditItem(@item.Id)" style="background-color:red"> <b>Edit</b> </button>
+        </td>
+    </tr>
+    }
+</table>
+<script>
+    function RemoveItem(itemId)
+    {
+        location = "/Restaurant/RemoveItem?id="+itemId;
+    }
+    function EditItem(itemId) {
+        location = "/Restaurant/AddItem?id=" + itemId;
+    }
+</script>

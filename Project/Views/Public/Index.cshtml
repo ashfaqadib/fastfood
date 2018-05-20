@@ -1,0 +1,246 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_PublicLayout.cshtml";
+}
+<head>
+    <link href="~/CSS/slideshow.css" rel="stylesheet" />
+</head>
+
+<script>
+    var map, infoWindow;
+    var geocoder;
+    function search() {
+        var formObj = document.getElementsByTagName("form")[0];
+        if (document.getElementById("selectLocation").style.display=="block") {
+            var address = document.getElementById('areaSelect').value + "," + document.getElementById('district').value;
+            geocoder.geocode({ 'address': address }, function (results, status) {
+                if (status === 'OK') {
+                    var latObj = document.getElementById("Latitude");
+                    var lonObj = document.getElementById("Longitude");
+                    var addObj = document.getElementById("Address");
+
+                    addObj.value = results[0].formatted_address;
+                    latObj.value = results[0].geometry.location.lat();
+                    lonObj.value = results[0].geometry.location.lng();
+
+                    document.getElementById('latlng').innerHTML = results[0].formatted_address + "</br>" + latObj.value + lonObj.value;
+                    formObj.submit();
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                    manualLocation();
+                }
+            });
+        }
+        else formObj.submit();
+    }
+    function geocodeLatLng(geocoder, pos, map) {
+        var latlng = { lat: parseFloat(pos.lat), lng: parseFloat(pos.lng) };
+        geocoder.geocode({ 'location': latlng }, function (results, status) {
+            if (status === 'OK') {
+                if (results[0]) {
+                    infoWindow.setContent("Location Found");
+                    document.getElementById("location").innerHTML = "<br/><span style='color:white;font-size:35px'>Your Location: <b>" + results[0].formatted_address + "</b></span><br/><br/>" +
+                                                                    " <button onclick='search()' class='buttonstart'>Show Restaurants Nearby</button>" + "<br/><br/>" +
+                                                                    "<button onclick='manualLocation()' class='buttonsub'>Not Your Location?</button>";
+                    var addObj = document.getElementById("Address");
+                    addObj.value = results[0].formatted_address;
+                    map.zoom = 20;
+
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) {
+
+                            var suggestionDiv = document.getElementById("suggestions");
+                            var myJson = JSON.parse(this.responseText);
+
+                            for (var index in myJson) {
+                            /*suggestionDiv.innerHTML += '<a href= "/Public/Menu?id='+myJson[index].Id+'"><div style="float: left;"><table><tr><td><img src="' +
+                                    myJson[index].ImageLocation + '" width="200px"/></td></tr>' +
+                                    '<tr><td>' + myJson[index].Name + '</td></tr></table></div></a>';*/
+
+                                suggestionDiv.innerHTML += '<div align="middle" class="container"><a href="/Public/Menu/?id=' + myJson[index].Id + '">' +
+                                '<img width="150px"  src="' + myJson[index].ImageLocation + '"><div class="names"><h2>' + myJson[index].Name + '</h2></div></a></div>';
+                            }
+                            //document.getElementById("suggestions").innerHTML += this.responseText;
+                        }
+                    };
+                    xhttp.open("GET", "/Public/HomeSuggestions?Latitude="+ pos.lat + '&Longitude=' + pos.lng, true);
+                    //xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                    //xhttp.send('"Latitude=' + pos.lat + '&Longitude=' + pos.lng);
+                    xhttp.send();
+
+                } else {
+                    window.alert('No results found');
+                    manualLocation();
+                }
+            } else {
+                window.alert('Geocoder failed due to: ' + status);
+                manualLocation();
+            }
+        });
+    }
+</script>
+
+<div  class="fwimage1" id="selectLocation"  style="background: rgba(0, 0, 0,0.5)">
+    <br />
+    <span style="color:white"><h1>Choose Location</h1></span>
+    <big><span style="color:white"><b>District</b></span></big>
+        <select id="district" onchange = "myFunction(this)" style="padding:1rem 3rem 1rem .5rem;">
+            <option></option>
+            <option>Dhaka</option>
+            <option>Chittagong</option>
+            <option>Sylhet</option>
+        </select>
+    <big><span style="color:white"><b>Area</b></span></big>
+        <select id="areaSelect" style="padding:1rem 3rem 1rem .5rem;">
+            <option></option>
+        </select>
+    <button onclick='search()' class="buttonstart">Search</button>
+    <p id="latlng"></p>
+</div>
+
+<div class="fwimage1"  id="location" style="background: rgba(0, 0, 0,0.5)">
+    
+</div>
+    
+<br/>
+
+<div id="map" style="background-color:#F9B384"></div>
+<br />
+        <div class="slideshow-container">
+ @foreach (var item in ViewBag.files)
+       {
+     <div class="mySlides fade">
+
+               <img src="@Html.DisplayFor(modelItem => item)" width="100%"/>
+         </div>
+     
+ }
+</div>
+<br>
+
+<div style="text-align:center">
+  <span class="dot"></span> 
+  <span class="dot"></span> 
+  <span class="dot"></span> 
+</div>
+<table border="1" width="60%" style="border-collapse:collapse;">
+    <tr>
+        <th>
+            Popular Restaurants Nearby
+        </th>
+    </tr>
+    <tr >
+        <td>
+    <div id="suggestions">
+
+    </div>
+        </td>
+    </tr>
+<table width="60%">
+
+<form method="post">
+    <input type="hidden" id="Latitude" name="Latitude">
+    <input type="hidden" id="Longitude" name="Longitude">
+    <input type="hidden" id="Address" name="Address">
+</form>
+    <body style="background-color:orange">
+    </body>
+<script>
+    var slideIndex = 0;
+    showSlides();
+
+    function showSlides() {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("dot");
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slideIndex++;
+        if (slideIndex > slides.length) { slideIndex = 1 }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+        setTimeout(showSlides, 2000); // Change image every 2 seconds
+    }
+    // Note: This example requires that you consent to location sharing when
+    // prompted by your browser. If you see the error "The Geolocation service
+    // failed.", it means you probably did not give permission for the browser to
+    // locate you.
+    function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: -34.397, lng: 150.644 },
+            zoom: 6
+        });
+        infoWindow = new google.maps.InfoWindow;
+
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                infoWindow.setPosition(pos);
+                geocoder = new google.maps.Geocoder;
+                geocodeLatLng(geocoder, pos, map);
+                infoWindow.open(map);
+                map.setCenter(pos);
+                var latObj = document.getElementById("Latitude");
+                var lonObj = document.getElementById("Longitude");
+                latObj.value = position.coords.latitude;
+                lonObj.value = position.coords.longitude;
+            }, function () {
+                handleLocationError(true, infoWindow, map.getCenter());
+            });
+        } else {
+            // Browser doesn't support Geolocation
+            handleLocationError(false, infoWindow, map.getCenter());
+        }
+    }
+
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+                              'Error: The Geolocation service failed.' :
+                              'Error: Your browser doesn\'t support geolocation.');
+        infoWindow.open(map);
+    }
+
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBi37o8UfifiirRF3FCPlep0HRqR5ObBZo&callback=initMap">
+</script>
+
+<script>
+    var selectLocDiv = document.getElementById("selectLocation");
+    selectLocDiv.style.display = "none";
+
+    function myFunction(district) {
+
+        var areaSelect = document.getElementById("areaSelect");
+        areaSelect.innerHTML = "<option></option>";
+
+        var dhakaAreas = ['Mirpur','Shyamoli', 'Mohammadpur','New Market'];
+        var chittagongAreas = ['CDA','Khulshi', 'Agrabad'];
+        var sylhetAreas = ['Baluchor','Baghbari R/A','Kumar Para'];
+
+        if (district.value == "Dhaka") var currentArea = dhakaAreas;
+        else if (district.value == "Chittagong") var currentArea = chittagongAreas;
+        else if (district.value == "Sylhet") var currentArea = sylhetAreas;
+
+        for (var i = 0; i < currentArea.length; i++) {
+            areaSelect.innerHTML += '<option>' + currentArea[i] + "</option>";
+        }
+    }
+    function manualLocation() {
+        var region = document.getElementById("selectLocation");
+        region.style.display = "block";
+        region = document.getElementById("location");
+        region.style.display = "none";
+    }
+</script>
+    

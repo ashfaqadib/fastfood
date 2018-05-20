@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Fast-Food</title>
+    <link rel="stylesheet" type="text/css" href="~/CSS/adminstyle.css">
+</head>
+<body>
+<table width="100%" align="center" cellspacing="0" cellpadding="0">
+    <tr style="background-color:#FF6347">
+        <td valign="middle">
+            <table width="100%" style="background-color:black;">
+                <tr>
+                    <td rowspan="2">
+                        <a href='@Url.Action("Index", "Admin")'>
+                            <img width="80px" src="~/image/logo.png">
+                        </a>
+                    </td>
+                    
+                     <td align="right">
+                         <div id="menu">
+                             </div>
+                <div id="dropdown">
+                       <ul>                          
+                        <li><a href="#" style="color:white">Account</a>
+                           <ul>
+                            <li>@Html.ActionLink("View Account", "ViewAccount", "Admin")</li>
+                            <li>@Html.ActionLink("Edit Account", "EditAccount", "Admin")</li>
+                            <li>@Html.ActionLink("Change Password", "ChangePassword", "Admin")</li>
+                          </ul>
+                        </li>
+                       <li><a href="#" style="color:white">Search</a>
+                           <ul>
+                            <li>@Html.ActionLink("Search Admin", "SearchAdmin", "Admin", new { id=0},null)</li>
+                            <li>@Html.ActionLink("Search User", "SearchUser", "Admin", new { id=0},null)</li>
+                            <li>@Html.ActionLink("Search Restaurant", "SearchRestaurant", "Admin", new { id=0},null)</li>
+                            <li>@Html.ActionLink("Search Transporter", "SearchTransporter", "Admin", new { id=0},null)</li>
+                           </ul>
+                          </li>
+                        <li><a href="#" style="color:white">Create</a>
+                           <ul>
+                            <li>@Html.ActionLink("Create Admin", "CreateAdmin", "Admin")</li>
+                            <li>@Html.ActionLink("Create User", "CreateUser", "Admin")</li>
+                            <li>@Html.ActionLink("Create Restaurant", "CreateRestaurant", "Admin")</li>
+                            <li>@Html.ActionLink("Create Transporter", "CreateTransporter", "Admin")</li>
+                           </ul>
+                          </li>
+                        <li><a href="#" style="color:white">Report</a>
+                           <ul>
+                            <li>@Html.ActionLink("Statistics Report", "StatisticsReport", "Admin")</li>
+                            <li>@Html.ActionLink("Activity Report", "ActivityReport", "Admin")</li>
+                            <li>@Html.ActionLink("Sales Report", "SalesReport", "Admin")</li>         
+                           </ul>
+                        </li>
+                            <li>@Html.ActionLink("Logout", "Logout", "Admin")</li>         
+                        </ul>
+                 </div>
+                      
+                     </td>
+                    
+                </tr>                                 
+                <tr>
+                    <td>
+                        @Html.ActionLink("CreateAdmin", "CreateAdmin", "Admin")
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" style="padding-top:100px">
+            @RenderBody()
+            <br /><br /><br /><br>
+        </td>
+    </tr>
+    <tr align="bottom">
+        <td align="center">
+            @Html.ActionLink("About Us", "Index", "Public")
+            @Html.ActionLink("Contact", "Index", "Public")
+        </td>
+    </tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,55 @@
+﻿@{
+    Layout = "~/Views/Shared/_RestaurantLayout.cshtml";
+}
+<head>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    </head>
+<body style="background-color:orange">
+    </body>
+<fieldset style="width:50%;height:350px">
+    <legend><b>Edit Restaurant Info</b></legend>
+	<form method="post">
+		<br/>
+		<table width="100%" cellpadding="20" cellspacing="20">
+            <tr>
+                <td colspan="4">@Html.ValidationSummary()</td>
+            </tr>
+			<tr>
+				<td>Name</td>
+				<td>:</td>
+				<td>@Html.TextBox("name")</td>
+                
+				<td></td>
+			</tr>
+			<tr>
+				<td>Email</td>
+				<td>:</td>
+				<td>@Html.TextBox("name")</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td valign="top">Minimum Order</td>
+				<td valign="top">:</td>
+				<td>@Html.TextBox("name")</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td valign="top">Open Hours</td>
+				<td valign="top">:</td>
+				<td>@Html.TextBox("name")</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td valign="top">Logo</td>
+				<td valign="top">:</td>
+				<td><input type="file" name="ImageUpload" id="ImageUpload" /></td>
+				<td></td>
+			</tr>
+		</table>
+		<hr/>
+        <br/ style="padding-top:5%">
+		<input type="submit" value="Submit">
+		<input type="reset">
+	</form>
+    <br/>
+</fieldset>

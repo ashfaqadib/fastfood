@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "SearchRestaurant";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@ViewBag.success
+<head>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body style="background-color:orange">
+    </body>
+<fieldset style="width:80%">
+    <legend>
+        <b>RESTAURANT | SEARCH</b>
+    </legend>
+    <form action="/Admin/SearchRestaurant" method="post">
+    Filter By
+    <select name="filter">
+        <option value="any">Any</option>
+        <option value="name">Name</option>
+        <option value="email">Email</option>
+        <option value="status">Status</option>
+    </select>
+    <input type="text" name="search">
+    <input type="submit" value="Search" style="width:100px;color:orangered" />
+    <br/>
+</fieldset>
+<br/>
+<table width="80%" cellspacing="1" border="0" cellpadding="5">
+    <tr>
+        <th style="text-align:center">NAME</th>
+        <th style="text-align:center">EMAIL</th>
+        <th style="text-align:center">STATUS</th>
+        <th colspan="3"></th>
+    </tr>
+   @foreach (var item in ViewBag.restList)
+   {
+        <tr style="background-color:rgba(0,0,0,0.5);color:white;border-style:inset;text-align:center">
+        <td height="30">@item.Name</td>
+        <td height="30">@item.Email</td>
+        <td height="20">@item.Status</td>
+        <td width="70"><a href="/Admin/DetailsOfRestaurant?email=@item.Email" style="color:skyblue">Detail</a></td>
+        <td width="50"><a href="/Admin/EditRestaurant?email=@item.Email" style="color:skyblue">Edit</a></td>
+        <td width="50"><a href="/Admin/DeleteRestaurant?email=@item.Email" style="color:skyblue">Delete</a></td>
+    </tr>
+   }
+   
+  
+</table>
+<hr>

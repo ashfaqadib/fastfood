@@ -1,0 +1,82 @@
+﻿@{
+    ViewBag.Title = "ShowOrderDetail";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+<head>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    </head>
+<br/> <br/> <br/>
+<fieldset>
+    <legend><b>Invoice</b></legend>
+    <br/>
+<table border="1" width="60%" cellpadding="10px" style="background: rgba(0, 0, 0,0.5);color:white;">
+    <tr>
+        <th colspan="5">Invoice#@ViewBag.InvoiceNo</th>
+    </tr>
+    <tr>
+        <th>
+            Item#
+        </th>
+        <th>
+            Item Name
+        </th>
+        <th>
+            Quantity
+        </th>
+        <th>
+            Price
+        </th>
+        <th>
+            Total
+        </th>
+    </tr>
+    @for(int i=0;i<@Model.Item.Count;i++)
+    {
+    <tr>
+        <td>
+            @(i+1)
+        </td>
+        <td>
+            @Model.Item[i].Name
+        </td>
+        <td align="center">
+            @Model.Quantity[i]
+        </td>
+        <td>
+            @Model.Item[i].Price
+        </td>
+        <td>
+            @Model.Price[i]
+        </td>
+    </tr>
+    }
+    <tr>
+        <td colspan="4" align="right"></td>
+        <td align="right">@Model.Total</td>
+    </tr>
+    <tr>
+        <td colspan="4" align="right">Delivery Charge</td>
+        <td align="right">+@Model.DeliveryCharge</td>
+    </tr>
+    <tr>
+        <td colspan="4" align="right">Discount(@Model.DiscountinPercentage %)</td>
+        <td align="right">-@Model.Discount</td>
+    </tr>
+    <tr>
+        <td colspan="4" align="right">Grand Total</td>
+        <td align="right">@ViewBag.GrandTotal</td>
+    </tr>
+    <tr>
+        <td colspan="4" align="right">VAT(@Model.VATinPercentage %)</td>
+        <td align="right">+@Model.VAT</td>
+    </tr>
+    <tr>
+        <td colspan="4" align="right"></td>
+        <td align="right"><br/></td>
+    </tr>
+    <tr>
+        <td colspan="4" align="right">Bill</td>
+        <td align="right">@Model.Bill</td>
+    </tr>
+</table>
+    <hr>

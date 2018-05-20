@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<head>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body style="background-color:orange">
+    </body>
+<fieldset style="width:80%;height:400px">
+    <legend><b>DETAILS|USER</b></legend>
+    <table width="60%" height="250px" cellpadding="0" cellspacing="0" style="background-color:rgba(0,0,0,0.5);color:white;border-style:inset;text-align:center">
+        <tr><td colspan="3"></td></tr>
+        <tr>
+            <td>Name</td>
+            <td>:</td>
+            <td>@Model.Name</td>
+        </tr>	            
+        <tr><td colspan="3"></td></tr>
+        <tr>
+            <td>Email</td>
+            <td>:</td>
+            <td>@Model.Email</td>
+        </tr>		
+        <tr><td colspan="3"></td></tr>			
+        <tr>
+            <td>Gender</td>
+            <td>:</td>
+            <td>@Model.Gender</td>
+        </tr>
+        <tr><td colspan="3"></td></tr>
+        <tr>
+            <td>Date of Birth</td>
+            <td>:</td>
+            <td>@Model.DateOfBirth</td>
+        </tr>
+        <tr><td colspan="3"></td></tr>
+        <tr>
+            <td>Status</td>
+            <td>:</td>
+            <td>@Model.Status</td>
+        </tr>
+    </table>
+    <br>	
+    <hr/>   
+<table>
+   <td style="width:100px"> <a href="/Admin/EditUser?email=@Model.Email" style="color:red">Edit</a></td>
+   <td style="width:100px"> <a href="/Admin/DeleteUser?email=@Model.Email" style="color:red">Delete</a></td>
+   <td style="width:100px"> <a href="/Admin/SearchUser" style="color:red">Back to Search</a></td>
+    </table>
+    <br/><br/><br>
+   

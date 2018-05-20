@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "Orders";
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+<head>
+    <link href="~/content/bootstrap.min.css" rel="stylesheet">
+</head>
+<br/> <br/>
+<fieldset>
+    <legend><b>ORDER HISTORY</b></legend>
+<table border="1" width="60%" cellpadding="10px" style="background: rgba(0, 0, 0,0.5);color:white;">
+    <tr>
+        <th>
+            Invoice#
+        </th>
+        <th>
+            Ordered From
+        </th>
+        <th>
+            Order Placed
+        </th>
+        <th>
+            Token#
+        </th>
+        <th>
+            Bill
+        </th>
+        <th>
+            Action
+        </th>
+    </tr>
+    @foreach(var invoices in @Model)
+    {
+        <tr>
+        <td>
+            @invoices.InvoiceNo
+        </td>
+        <td>
+            @invoices.OrderOwner
+        </td>
+        <td>
+            @invoices.OrderTime
+        </td>
+        <td>
+            @invoices.TokenNo
+        </td>
+        <td>
+            @invoices.Bill
+        </td>
+        <td>
+            <button onclick="showDetails(@invoices.InvoiceNo)" style="background:red;padding:5px"> <b>Details</b> </button>
+            <button onclick="trackOrder(@invoices.InvoiceNo)" style="background:red;padding:5px"> <b>Track Order</b> </button>
+        </td>
+    </tr>
+    }
+</table>
+    
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script>
+    function showDetails(id) {
+        location = "/Customer/InvoiceDetails/" + id;
+    }
+    function trackOrder(invId) {
+        console.log(invId);
+        $.ajax({
+            type: "GET",
+            url: '/Customer/TrackOrder?invId='+invId,
+            dataType: "json",
+            success: function (tasks) {
+                alert("Your order status is: "+tasks);
+            },
+            error: function (xhr) {
+                alert("Some error occured please try again!");
+            }
+        });
+    }
+</script>

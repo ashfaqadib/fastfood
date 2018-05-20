@@ -1,0 +1,73 @@
+﻿@{
+    Layout = "~/Views/Shared/_RestaurantLayout.cshtml";
+}
+<head>
+    <link href="~/content/bootstrap.min.css" rel="stylesheet">
+</head>
+<body style="background-color:orange">
+    </body>
+<br/> <br/>
+<fieldset style="width:80%;height:400px">
+    <legend><b>PROFILE | EDIT</b></legend>
+<div id="edit">
+	<form method="post" enctype="multipart/form-data">
+		<br/>
+		<table width="60%" cellpadding="20" cellspacing="20" style="background-color:rgba(0,0,0,.5);text-align:center;color:white;border-style:inset">
+            <tr>
+                <td colspan="4">@Html.ValidationSummary()</td>
+            </tr>
+			<tr>
+				<td>Name</td>
+				<td>:</td>
+				<td style="color:black">@Html.TextBox("name")</td>
+                
+				<td></td>
+			</tr>
+			<tr>
+				<td>Open Hours</td>
+				<td>:</td>
+				<td style="color:black">@Html.TextBox("OpenHours")</td>
+                
+				<td></td>
+			</tr>
+			<tr>
+				<td>Minimum Order</td>
+				<td>:</td>
+				<td style="color:black">@Html.TextBox("MinimumOrder")</td>
+                
+				<td></td>
+			</tr>
+			<tr>
+				<td>Delivery Charge</td>
+				<td>:</td>
+				<td style="color:black">@Html.TextBox("DeliveryCharge")</td>
+                
+				<td></td>
+			</tr>
+			<tr>
+				<td>Discount Percentage</td>
+				<td>:</td>
+				<td style="color:black">@Html.TextBox("DiscountinPercentage")</td>
+                
+				<td></td>
+			</tr>
+			<tr>
+				<td>VAT Percentage</td>
+				<td>:</td>
+				<td style="color:black">@Html.TextBox("VATinPercentage")</td>
+				<td></td>
+			</tr>            
+			<tr>
+				<td>Change Logo</td>
+				<td>:</td>
+				<td style="color:black"><input type="file" id="image" name="image"/></td>
+				<td></td>
+			</tr>                 
+
+		</table>
+		<hr/>
+        <br/ style="padding-top:5%">
+		<input type="submit" value="Submit" style="width:100px;color:orangered">
+		<input type="reset" style="width:100px;color:orangered">
+	</form>
+ </div>

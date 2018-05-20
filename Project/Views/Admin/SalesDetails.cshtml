@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "SalesDetails";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<body style="background-color:orange">
+    </body>
+<h2>SalesDetails</h2>
+    <img src="@Url.Action("SalesChart")" style="border:2px inset;border-color:red;background-color:rgba(0,0,0,0.5)" >
+
+<form method="post" action="/Admin/SalesDetails">
+Month:<input type="month" name="month"><input type="submit" name="search" value="search">
+    <input type="hidden" name="id" value="@ViewBag.id"></input>
+<hr>
+    </form>
+<fieldset style="width:50%">
+<table align="left" width="50%" cellspacing="5" border="1" cellpadding="5">
+    <tr style="background-color:rgba(0,0,0,0.5);color:white">
+        <th align="center">ITEM NAME</th>
+    </tr>
+    @foreach (var item in ViewBag.itemlist)
+    {
+
+    <tr style="background-color:rgba(0,0,0,0.5);color:white">
+        <th align="left">@item.Name</th>
+        </tr>
+    
+    }
+
+</table>
+
+
+    <table align="left" width="50%" cellspacing="5" border="1" cellpadding="5">
+    <tr style="background-color:rgba(0,0,0,0.5);color:white">
+        <th align="center">Quantity</th>
+    </tr>
+    @foreach (var quantity in ViewBag.quantitylist)
+    {
+
+    <tr style="background-color:rgba(0,0,0,0.5);color:white">
+        <th align="center">@quantity</th>
+            </tr>
+    
+    }
+ 
+</table>
+    </fieldset>
+        <b style="margin-left:50px">Total</b>
+    <b style="margin-left:300px;">@ViewBag.total</b>
+<hr>

@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "LogIn";
+    Layout = "~/Views/Shared/_PublicLayout.cshtml";
+}
+<head>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="~/CSS/loginstyle.css">
+</head>
+<body style="background-color:orange">
+      <form method="post">
+          <div id="login">
+              <h2>LOGIN</h2>
+        <table style="padding:15px;margin-top:10%">
+
+            <tr>
+                <td colspan="3"> @Html.ValidationSummary()</td>
+            </tr>
+
+            <tr>
+                <td>Email</td>
+				<td>:</td>
+                <td> @Html.TextBox("email",null ,new { style=" width:200px;height:30px;border:2px inset; "})</td>
+            </tr>
+             <tr style="height:20px;">
+            </tr>
+            <tr>
+                <td>Password</td>
+				<td>:</td>
+                <td> @Html.Password("password",null ,new { style=" width:200px;height:30px;border:2px inset; "})</td>
+            </tr>
+        </table>
+          <br/ style="padding-top:5%"><br/>
+          @Html.CheckBox("remember")Remember Me
+		<br/ style="padding-top:5%"><br/>
+        <input type="submit" value="Submit">   
+         <br/ style="padding-top:5%"><br/>
+        @Html.ActionLink("Forgot Password?", "ForgotPassword", "Login", new { @style="color:orange"})
+     </div>
+              </form>
+       
+    </body>

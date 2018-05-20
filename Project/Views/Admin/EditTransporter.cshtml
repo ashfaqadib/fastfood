@@ -1,0 +1,106 @@
+﻿@model Project.Models.EditProfileModel
+
+@{
+    ViewBag.Title = "EditTransporter";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<head>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body style="background-color:orange">
+    </body>
+<fieldset style="width:50%;height:400px">
+    <legend><b> EDIT</b></legend>
+    <br/>
+    <form method="post">
+       <table width="60%" height="300px" cellpadding="0" cellspacing="0" style="background-color:rgba(0,0,0,0.5);color:white;border-style:inset;text-align:center">
+            @Html.ValidationSummary()
+			<tr>
+				<td>Name</td>
+				<td>:</td>
+				<td style="color:black"> @Html.EditorFor(model => model.Name)</td>              
+				<td></td>
+			</tr>	
+            <tr><td colspan="4"></td></tr>
+            <tr>
+                <td height="30">Email</td>
+                <td>:</td>
+                <td style="color:black">
+                    <input name="email" type="text" value=@Model.Email>
+                    <abbr title="hint: sample@example.com"><b>i</b></abbr>
+                </td>
+                <td></td>
+            </tr>
+            <tr><td colspan="4"></td></tr>
+            <tr>
+                <td height="30">Gender</td>
+                <td>:</td>
+                <td>
+                    <input name="gender" type="radio" value="Male" @(Model.Gender=="Male"? "checked='checked'" : "")>Male
+                    <input name="gender" type="radio" value="Female" @(Model.Gender=="Female"? "checked='checked'" : "")>Female
+                    <input name="gender" type="radio" value="Other" @(Model.Gender=="Other"? "checked='checked'" : "")>Other
+                </td>
+                <td></td>
+            </tr>
+            <tr><td colspan="4"></td></tr>
+            <tr>
+                <td valign="top">Date of Birth</td>
+                <td valign="top">:</td>
+                <td height="30">
+                    <select name="dobDay" style="color:black">
+                    <option></option>  
+                    @for(int i=1;i<32;i++)
+                    {
+                        if (@ViewBag.dobDay == i) 
+                            { <option selected>@i</option> }
+                        else { <option>@i</option> }
+                    }
+                    </select>
+                    /
+                    <select name="dobMonth" style="color:black">
+                    <option></option>  
+                    @for(int i=1;i<=12;i++)
+                    {
+                        if (@ViewBag.dobMonth == i) 
+                            { <option selected>@i</option> }
+                        else { <option>@i</option> }
+                    }
+                    </select>
+                    /
+                    <select name="dobYear" style="color:black">
+                    <option></option>  
+                    @for(int i=1950;i<2017;i++)
+                    {
+                        if (@ViewBag.dobYear == i) 
+                            { <option selected>@i</option> }
+                        else { <option>@i</option> }
+                    }
+                    </select>
+                    (DD/MM/YEAR)
+                </td>
+                <td></td>
+            </tr>
+ 
+            <tr><td colspan="4"></td></tr>
+            <tr>
+                <td height="30">Status</td>
+                <td>:</td>
+                <td>
+                    <select name="status" style="color:black">
+                        <option></option>
+                        <option value="Active" @(Model.Status=="Active"? "selected='selected'" : "")>Active</option>
+                        <option value="Pending" @(Model.Status=="Pending"? "selected='selected'" : "")>Pending</option>
+                        <option value="Blocked" @(Model.Status=="Blocked"? "selected='selected'" : "")>Blocked</option>
+                    </select>
+                </td>
+                <td></td>
+            </tr>
+            <tr><td colspan="4"></td></tr>
+        </table>
+        <hr>
+        <input type="submit" value="Save" style="color:orangered;width:100px"/>
+        <a href="/Admin/SearchTransporter?id=0" style="color:red">Back to Search</a>
+    </form>
+</fieldset>
+
+

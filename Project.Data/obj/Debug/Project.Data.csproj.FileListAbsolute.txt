@@ -1,0 +1,12 @@
+K:\Academic\Semester 9\ATP 2\Project\Project\Project.Data\bin\Debug\Project.Data.dll.config
+K:\Academic\Semester 9\ATP 2\Project\Project\Project.Data\bin\Debug\Project.Data.dll
+K:\Academic\Semester 9\ATP 2\Project\Project\Project.Data\bin\Debug\Project.Data.pdb
+K:\Academic\Semester 9\ATP 2\Project\Project\Project.Data\bin\Debug\EntityFramework.dll
+K:\Academic\Semester 9\ATP 2\Project\Project\Project.Data\bin\Debug\EntityFramework.SqlServer.dll
+K:\Academic\Semester 9\ATP 2\Project\Project\Project.Data\bin\Debug\Project.Entity.dll
+K:\Academic\Semester 9\ATP 2\Project\Project\Project.Data\bin\Debug\Project.Entity.pdb
+K:\Academic\Semester 9\ATP 2\Project\Project\Project.Data\bin\Debug\EntityFramework.xml
+K:\Academic\Semester 9\ATP 2\Project\Project\Project.Data\bin\Debug\EntityFramework.SqlServer.xml
+K:\Academic\Semester 9\ATP 2\Project\Project\Project.Data\obj\Debug\Project.Data.csprojResolveAssemblyReference.cache
+K:\Academic\Semester 9\ATP 2\Project\Project\Project.Data\obj\Debug\Project.Data.dll
+K:\Academic\Semester 9\ATP 2\Project\Project\Project.Data\obj\Debug\Project.Data.pdb

@@ -1,0 +1,98 @@
+﻿@{
+    Layout = "~/Views/Shared/_PublicLayout.cshtml";
+    string gender = Model.Gender;
+}
+<head>
+        <link href="content/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="~/CSS/signupstyle.css">
+    </head>
+<div id="signup">
+	<form method="post">
+		<br/>
+        <h2>SIGN UP</h2>
+		<table width="50%" cellpadding="5" cellspacing="0">
+            <tr>
+                <td colspan="4">@Html.ValidationSummary()</td>
+            </tr>
+			<tr>
+				<td>Name</td>
+				<td>:</td>
+				<td>@Html.TextBox("name",null ,new { style=" width:180px;height:20px;border:2px inset; "})</td>
+                
+				<td></td>
+			</tr>		
+			<tr><td colspan="4"><hr/></td></tr>
+			<tr>
+				<td>Email</td>
+				<td>:</td>
+				<td>
+					@Html.TextBox("email",null ,new { style=" width:180px;height:20px;border:2px inset; "})
+					<abbr title="hint: sample@example.com"><b>i</b></abbr>
+				</td>
+				<td></td>
+			</tr>		
+			<tr><td colspan="4"><hr/></td></tr>	
+			<tr>
+				<td>Password</td>
+				<td>:</td>
+				<td>@Html.Password("password")</td>
+				<td></td>
+			</tr>		
+			<tr><td colspan="4"><hr/></td></tr>
+			<tr>
+				<td>Confirm Password</td>
+				<td>:</td>
+				<td>@Html.Password("confirmpassword")</td>
+				<td></td>
+			</tr>		
+			<tr><td colspan="4"><hr/></td></tr>
+			<tr>
+				<td>Gender</td>
+				<td>:</td>
+				<td>   
+					@Html.RadioButton("gender","Male",(gender=="Male"))Male
+					@Html.RadioButton("gender","Female",(gender=="Female"))Female
+					@Html.RadioButton("gender","Other",(gender=="Others"))Other
+				</td>
+				<td></td>
+			</tr>		
+			<tr><td colspan="4"><hr/></td></tr>
+			<tr>
+				<td valign="top">Date of Birth</td>
+				<td valign="top">:</td>
+				<td>
+                    <select name="dobDay" style="color:black">
+                    <option></option>  
+                    @for(int i=1;i<32;i++)
+                    {
+                      <option>@i</option>  
+                    }
+                    </select>
+                    /
+                    <select name="dobMonth" style="color:black">
+                    <option></option>  
+                    @for(int i=1;i<=12;i++)
+                    {
+                      <option>@i</option>  
+                    }
+                    </select>
+                    /
+                    <select name="dobYear" style="color:black">
+                    <option></option>  
+                    @for(int i=1950;i<2017;i++)
+                    {
+                      <option>@i</option>  
+                    }
+                    </select>
+                    (DD/MM/YEAR)
+				</td>
+				<td></td>
+			</tr>
+		</table>
+        <br/ style="padding-top:5%">
+		<input type="submit" value="Submit">
+		<input type="reset" style="color:orangered">
+	</form>
+    </div>
+<body style="background-color:orange">
+    </body>

@@ -1,0 +1,130 @@
+﻿@{
+    ViewBag.Title = "TaskHistoryOfTransporter";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<body style="background-color:orange">
+    </body>
+<h2>TaskHistory</h2>
+<table width="900px" border="1" cellpadding="1" cellspacing="1" style="border-collapse: collapse;background-color:rgba(0,0,0,0.5);color:white;border-style:inset;">
+    <tr>
+        <th>Task ID</th>
+        <th>Invoice Id</th>
+        <th>Restaurant Name</th>
+        <th>Task Starting Time</th>
+        <th>Task Ending Time</th>
+        <th>Status</th>
+        <th>Details</th>
+    </tr>
+    @foreach (var task in @Model)
+    {
+        <tr>
+            <td>@task.Id</td>
+            <td>@task.InvoiceNo</td>
+            <td>@task.RestaurantName</td>
+            <td>@task.StartingTime</td>
+            <td>@task.EndTime</td>
+            <td>@task.Status</td>
+            <td><button onclick="showInvoiceDetails(' + @task.InvoiceNo + ')" style="background-color:red;"> <b>Show/Hide</b> </button></td>
+        </tr>
+        <tr id="invDetailRow-@task.InvoiceNo" style="background-color:#F9B384;display:none"></tr>
+    }
+</table>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+<script>
+    function showInvoiceDetails(invId) {
+        $.ajax({
+            type: "GET",
+            url: '/Admin/GetInvoiceDetails?invId=' + invId,
+            dataType: "json",
+            success: function (invoice) {
+                prepareInvoiceDetailsTable(invoice);
+                $("#invDetailRow-" + invoice.InvoiceNo).fadeToggle();
+                //console.log(invoice);
+            },
+            error: function (xhr) {
+                alert(xhr.error);
+            }
+        });
+    }
+
+    function prepareInvoiceDetailsTable(invoice) {
+        var htmlstring = '<td colspan="8"><table border="1" width="100%" cellpadding="10px" style="background-color:rgba(255,165,0,0.5);color:black">' +
+            '<tr>' +
+                '<th colspan="5">Invoice#' + invoice.InvoiceNo + '</th>' +
+            '</tr>' +
+            '<tr>' +
+               ' <th colspan="5">' + invoice.RestaurantName + '</th>' +
+            '</tr>' +
+            '<tr>' +
+                '<th colspan="5"><small>' + invoice.RestaurantAddress + '</small></th>' +
+            '</tr>' +
+            '<tr>' +
+               ' <th colspan="2">Recipient</th>' +
+                '<td colspan="3">' + invoice.Recipient + '</td>' +
+           ' </tr>' +
+            '<tr>' +
+                '<th colspan="2">Recipient Contact#</th>' +
+                '<td colspan="3">' + invoice.RecipientContactNo + '</td>' +
+           ' </tr>' +
+           ' <tr>' +
+                '<th colspan="2">Delivery Address</th>' +
+                '<td colspan="3">' + invoice.DeliveryAddress + '</td>' +
+            '</tr>' +
+           ' <tr>' +
+                '<th colspan="5"><br/></th>' +
+            '</tr>' +
+           ' <tr>' +
+               '<th>Item#</th> <th>Item Name </th><th> Quantity</th><th>Price </th><th>Total </th>' +
+           ' </tr>';
+        for (var i = 0; i < invoice.Item.length; i++) {
+            htmlstring += '<tr>' +
+            '<td>' +
+            i +
+            '</td>' +
+            '<td>' +
+            invoice.Item[i].Name +
+            '</td>' +
+            '<td align="center">' +
+            invoice.Quantity[i] +
+            '</td>' +
+            '<td>' +
+            invoice.Item[i].Price +
+            '</td>' +
+            '<td>' +
+            invoice.Price[i] +
+            '</td></tr>';
+        }
+        htmlstring += '<tr>' +
+        '<td colspan="4" align="right"></td>' +
+       ' <td align="right">' + invoice.Total + '</td>' +
+   ' </tr>' +
+    '<tr>' +
+        '<td colspan="4" align="right">Delivery Charge</td>' +
+       ' <td align="right">+' + invoice.DeliveryCharge + '</td>' +
+   ' </tr>' +
+    '<tr>' +
+        '<td colspan="4" align="right">Discount(' + invoice.DiscountinPercentage + '%)</td>' +
+        '<td align="right">-' + invoice.Discount + '</td>' +
+   ' </tr>' +
+    '<tr>' +
+       ' <td colspan="4" align="right">Grand Total</td>' +
+       ' <td align="right"></td>' +
+   ' </tr>' +
+    '<tr>' +
+        '<td colspan="4" align="right">VAT(' + invoice.VATinPercentage + '%)</td>' +
+       ' <td align="right">+' + invoice.VAT + '</td>' +
+    '</tr>' +
+    '<tr>' +
+        '<td colspan="4" align="right"></td>' +
+        '<td align="right"><br/></td>' +
+   ' </tr>' +
+    '<tr>' +
+       ' <td colspan="4" align="right">Bill</td>' +
+       ' <td align="right">' + invoice.Bill + '</td>' +
+    '</tr>' +
+'</table></td>';
+        document.getElementById("invDetailRow-" + invoice.InvoiceNo).innerHTML = htmlstring;
+    }
+</script>

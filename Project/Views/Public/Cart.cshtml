@@ -1,0 +1,91 @@
+﻿@{
+    ViewBag.Title = "Cart";
+    Layout = "~/Views/Shared/_PublicLayout.cshtml";
+}
+
+<fieldset>
+    <legend><b>CART</b> <button onclick="discardCart()">Discard Cart</button></legend>
+    <br/>
+<table border="1" width="60%" cellpadding="10px"  style="background: rgba(0, 0, 0,0.5);color:white;">
+@if (@Model.Item.Count>0){
+    <tr>
+        <th colspan="5">@Model.RestaurantName</th>
+    </tr>
+    <tr>
+        <th>
+            Item#
+        </th>
+        <th>
+            Item Name
+        </th>
+        <th>
+            Quantity
+        </th>
+        <th>
+            Price
+        </th>
+        <th>
+            Total
+        </th>
+    </tr>
+    for(int i=0;i<@Model.Item.Count;i++)
+    {
+    <tr>
+        <td>
+            @(i+1)
+        </td>
+        <td>
+            @Model.Item[i].Name
+        </td>
+        <td align="center">
+            @Model.Quantity[i]
+        </td>
+        <td>
+            @Model.Item[i].Price
+        </td>
+        <td>
+            @Model.Price[i]
+        </td>
+    </tr>
+    }
+    <tr>
+        <td colspan="4" align="right">Grand Total</td>
+        <td align="right">@Model.Total</td>
+    </tr>
+    <tr>
+        <td colspan="4" align="right">Delivery Charge</td>
+        <td align="right">+@Model.DeliveryCharge</td>
+    </tr>
+    <tr>
+        <td colspan="4" align="right">VAT(@Model.VATinPercentage %)</td>
+        <td align="right">+@Model.VAT</td>
+    </tr>
+    <tr>
+        <td colspan="4" align="right">Discount(@Model.DiscountinPercentage %)</td>
+        <td align="right">-@Model.Discount</td>
+    </tr>
+    <tr>
+        <td colspan="4" align="right">Bill</td>
+        <td align="right">@ViewBag.Bill</td>
+    </tr>
+    <tr><td colspan="5" align="right"><button onclick='checkOut()'>Proceed to Checkout</button></td></tr>
+}
+    else{
+    <tr><td align="center">Cart is empty.</td></tr>
+}
+</table>
+<script>
+    function checkOut() {
+        alert("You must login as a customer to checkout.");
+    }
+    function discardCart() {
+        var req = new XMLHttpRequest();
+        req.onreadystatechange = function () {
+            if (req.readyState == 4) {
+                location.reload();
+            }
+        }
+        req.open("GET", "/Public/DiscardCart", true);
+        req.send();
+    }
+</script>
