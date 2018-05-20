@@ -27,8 +27,7 @@ namespace Project
 
             ValueProviderFactories.Factories.Add(new JsonValueProviderFactory());
 
-            //MyDbContext dbContext = MyDbContext.GetDbContext();
-            //dbContext.AddToDb();
+            //MyDbContext dbContext = MyDbContext.GetDbContext(); dbContext.AddToDb();
         }
 
         protected void FormsAuthentication_OnAuthenticate(Object sender, FormsAuthenticationEventArgs e)
